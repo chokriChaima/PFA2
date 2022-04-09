@@ -2,9 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:pfa2_mobile_app/models/student.dart';
-import 'package:pfa2_mobile_app/screens/profileStudent.dart';
-import 'package:pfa2_mobile_app/screens/signUp.dart';
+import 'package:pfa2_mobile_app/screens/home.dart';
+import 'package:pfa2_mobile_app/screens/signUpOptions.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({ Key? key }) : super(key: key);
@@ -30,29 +29,34 @@ class _LogInState extends State<LogIn> {
  
     //Email Field
     final emailField = TextFormField (
-      autofocus: false,
-      controller: emailController,
-      validator: (value){
-        if(value!.isEmpty)
-        {
-          return ("Please enter your email"); 
-        }
-        // reg expression for email validation
-        if(!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]") .hasMatch(value))
-        {
-          return ("Please enter a valid email");
-        }
-        return null ;
-      },
-      onSaved: (value) => emailController.text = value!,
-      textInputAction: TextInputAction.next,
-      decoration: const InputDecoration(
-        //you may add icons here
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Email",
-        border: InputBorder.none,
-      ),
+     autofocus: false,
+     controller: emailController,
+     validator: (value){
+       if(value!.isEmpty)
+       {
+         return ("Please enter your email"); 
+       }
+       // reg expression for email validation
+       if(!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]") .hasMatch(value))
+       {
+         return ("Please enter a valid email");
+       }
+       return null ;
+     },
+     onSaved: (value) => emailController.text = value!,
+     textInputAction: TextInputAction.next,
+     decoration:  InputDecoration(
+       //you may add icons here
+      
+       contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+       hintText: "Email",
+        border:  OutlineInputBorder(borderSide:BorderSide( color: HexColor("#697A98"))),           
+         focusedBorder: OutlineInputBorder(
+           borderSide: BorderSide( color:  HexColor("#697A98") )
+         )
+     ),
     );
+    
 
     //Password Field
     final passwordField = TextFormField (
@@ -71,11 +75,14 @@ class _LogInState extends State<LogIn> {
       },
       onSaved: (value) => passwordController.text = value!,
       textInputAction: TextInputAction.done,
-      decoration: const InputDecoration(
+      decoration:  InputDecoration(
         //you may add icons here
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        contentPadding:const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Password",
-        border: InputBorder.none,
+        border:  OutlineInputBorder(borderSide: BorderSide(color:  HexColor("#697A98"))),
+          focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide( color:  HexColor("#697A98") )
+        )
       ),
     );
 
@@ -138,16 +145,14 @@ class _LogInState extends State<LogIn> {
                         fontFamily: "Poppins-Regular",
                       )),
                     SizedBox(height: 60,),
-                    Material(
-                      child: emailField,
-                      elevation: 8,
-	                    shadowColor: Colors.white, ),
+
+                    emailField,
+
                     SizedBox(height: 25,),
-                    Material(
-                      child: passwordField,
-                      elevation: 8,
-	                    shadowColor: Colors.white,),
+
+                    passwordField,
                     SizedBox(height: 65,),
+
                     logInButton,
 
                     SizedBox(height: 25,),
@@ -162,7 +167,7 @@ class _LogInState extends State<LogIn> {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const SignUp() )
+                              MaterialPageRoute(builder: (context) => const SignUpOptions() )
                             );
                           },
                           child: Text("SignUp",
@@ -198,7 +203,7 @@ class _LogInState extends State<LogIn> {
             password: password);
             Fluttertoast.showToast(msg: "Login Successful");
             Navigator.of(context).pushReplacement(
-             MaterialPageRoute(builder: (context) => StudentProfile() )
+             MaterialPageRoute(builder: (context) => const Home() )
             );
       }on FirebaseAuthException  catch (e)  {
           Fluttertoast.showToast(msg: "User does not exist");
