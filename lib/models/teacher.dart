@@ -5,9 +5,8 @@ class Teacher extends Client {
   String? teacherUID;
   String? department;
   String? workPlace;
-  String? teacherIdentity;
 
-  Teacher(String? userName, String? gendre, String? email, String? password,{this.teacherUID,this.department,this.teacherIdentity,this.workPlace}): super(email: email,gender: gendre, password: password,userName: userName);
+  Teacher(String? userName, String? gendre, String? email, String? password,{this.teacherUID,this.department,this.workPlace}): super(email: email,gender: gendre, password: password,userName: userName);
   
   // getting data from server
   factory Teacher.fromMap(map)
@@ -20,7 +19,6 @@ class Teacher extends Client {
       teacherUID: map['teacherUID'], 
       department:  map['department'],
       workPlace:  map['workPlace'],
-      teacherIdentity: map['teacherIdentity'],
     );
   }
 
@@ -34,7 +32,6 @@ class Teacher extends Client {
       "gender": gender,
       "major":  department,
       "password":  password,
-      "studentIdentity": teacherIdentity,
       "userName": userName, 
     };
   }

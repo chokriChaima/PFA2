@@ -4,11 +4,9 @@ class Student extends Client{
   String? studentUID;
   String? major;
   String? education ;
-  String? studentIdentity;
-
 
   // constuctor
-  Student(String? userName, String? gendre, String? email, String? password,{this.studentUID,this.major, this.education, this.studentIdentity}): super(email: email,gender: gendre, password: password,userName: userName);
+  Student(String? userName, String? gendre, String? email, String? password,{this.studentUID,this.major, this.education}): super(email: email,gender: gendre, password: password,userName: userName);
 
   // getting data from server
   factory Student.fromMap(map)
@@ -21,7 +19,7 @@ class Student extends Client{
       studentUID: map['studentUID'], 
       major:  map['major'],
       education:  map['education'],
-      studentIdentity: map['studentIdentity'],
+ 
     );
   }
 
@@ -35,7 +33,6 @@ class Student extends Client{
       "gender": gender,
       "major":  major,
       "password":  password,
-      "studentIdentity": studentIdentity,
       "userName": userName, 
     };
   }
