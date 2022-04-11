@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart' ;
-import 'package:hexcolor/hexcolor.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements.dart/AppColors.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements.dart/BigText.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements.dart/SmallText.dart';
+import 'package:pfa2_mobile_app/screens/menuItemBody.dart';
 
 class Home extends StatefulWidget {
   const Home({ Key? key }) : super(key: key);
@@ -12,129 +15,52 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar : AppBar(
-      
-        elevation: 0,
-        title:  Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            
-            BackButton(
-              color: HexColor("#697A98"),
-            ),
-            Text("Home", 
-              style : TextStyle(
-              color: HexColor("#697A98"), 
-              fontWeight: FontWeight.bold
-               )
-            ),
-            Icon(
-              Icons.person,
-              color: HexColor("#697A98"),
-            )
-          ],
-        ),
-      ),
+      body:SafeArea(
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              // HEADER
+              Container(
+                margin: EdgeInsets.only(top:45, bottom :15),
+                padding: EdgeInsets.only(left: 15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
         
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(36,13.0,36,0),
-          child: SingleChildScrollView(
-            child: Container(
-              
-              child: Column
-              (
-                children: <Widget>[
-                  const Text(
-                    "Today's Menu, Hope you join us",
-                      style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                      fontFamily: "Poppins-Regular"
-                      )
-                    ),
-                  SizedBox(height: 22,),
-                 Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      const Text (
-                        "Lunch",
-                        style: TextStyle(
-                          fontSize: 23,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-
-                      TextButton(
-                        child: Text(
-                          "View More",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-
-                        onPressed: (){
-                          /*Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (BuildContext context){
-                                return ?();
-                              },
-                            ),
-                          );*/
-                        },
-                      ),
-                    ],
-                  ),
-
-                SizedBox(
-                  height: 258,
-                  width : MediaQuery.of(context).size.width-23,
-                  child: Image.asset("assets/images/d1.jpg",fit: BoxFit.fitWidth),
+                  children: <Widget>[
+                    BigText(text:"University Restaurant", size: 30,color: AppColors.mainColor,),
+                    const SizedBox(height:6.0),
+                    SmallText(text:"Make your reservation today",size : 16,color: const Color(0xFF332D2B),),
+                  ]
                 ),
-
-                SizedBox(height: 20),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      const Text (
-                        "Dinner",
-                        style: TextStyle(
-                          fontSize: 23,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-
-                      TextButton(
-                        child: Text(
-                          "View More",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-
-                        onPressed: (){
-                          /*Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (BuildContext context){
-                                return ?();
-                              },
-                            ),
-                          );*/
-                        },
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(
-                  height: 258,
-                  width : MediaQuery.of(context).size.width-23,
-                  child: Image.asset("assets/images/d4.jpg",fit: BoxFit.fitWidth),
-                ),
-              
-               ] ,
               ),
+              // BODY
+              const MenuItemBody(),
+              // More Options
+              Container(
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      margin: const EdgeInsets.only(top: 30,left: 40,) ,
+                      child: BigText(text: "More Options")
+                    ),
+                  ],
+                )
+              )
+              //List of user options 
+             /* ListView.builder(
+                itemCount: 2,
+                itemBuilder: (context, index){
+                  return Container(
+                    margin: const EdgeInsets.only(left:20,right:20,),
+                    
+                      
+                  );
+              })*/
+
+            ],
             ),
-          ),
-        )
+        ),
+      )
     );
   }
 }
