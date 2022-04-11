@@ -178,6 +178,15 @@ class _LogInState extends State<LogIn> {
                           ))
                         )
                       ],
+                    ),
+                    // delete me later
+                    Center(
+                      child: TextButton(onPressed: (){
+                        Navigator.pushReplacement(
+                          context, MaterialPageRoute(builder: (context) => Home() ));
+                        }
+                        , child: const Text("take me home")
+                      ),
                     )
                   ],
                 )
