@@ -24,7 +24,6 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
 
   //editing controller
   final userNameEditingController = TextEditingController();
-  final teacherIdentityController =  TextEditingController();
   final workSpaceController =  TextEditingController();
   final departmentController =  TextEditingController() ;
   final passwordController =  TextEditingController();
@@ -130,7 +129,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
       validator: (value){
         if(value!.isEmpty)
         {
-          return("Please enter your work place name");
+          return("Please enter the institution name");
         }
         return null;
       },
@@ -139,33 +138,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
       decoration:  InputDecoration(
         //you may add icons here
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Work place",
-        border:  OutlineInputBorder(borderSide:BorderSide( color: HexColor("#697A98"))),           
-         focusedBorder: OutlineInputBorder(
-           borderSide: BorderSide( color:  HexColor("#697A98") )
-         )
-      ),
-    );
-
-    // Student Indentity Field
-    final teacherIndentityField = TextFormField(
-      controller: teacherIdentityController,
-      validator: (value){
-        if(value!.isEmpty)
-        {
-          return ("Please enter your identity");
-        }
-        if(value.length<8)
-        {
-          return ("Please enter a valid identity");
-        }
-        return null;
-      },
-      onSaved: (value) => teacherIdentityController.text = value!,
-      textInputAction: TextInputAction.next,
-      decoration:  InputDecoration(
-        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Identity",
+        hintText: "Institution",
         border:  OutlineInputBorder(borderSide:BorderSide( color: HexColor("#697A98"))),           
          focusedBorder: OutlineInputBorder(
            borderSide: BorderSide( color:  HexColor("#697A98") )
@@ -310,9 +283,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
                      
                     const SizedBox(height: 10),
                     emailField,
-                      
-                    const SizedBox(height: 10),
-                   teacherIndentityField,
+                     
                      
 	                  
                     /*SizedBox(height: 10),
@@ -382,7 +353,6 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
       teacherUID: user.uid,
       workPlace : workSpaceController.text ,
       department : departmentController.text,
-      teacherIdentity : teacherIdentityController.text 
     );
    
     await firebaseFirestore

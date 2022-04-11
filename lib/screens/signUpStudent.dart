@@ -24,7 +24,6 @@ class _SignUpStudentState extends State<SignUpStudent> {
 
   //editing controller
   final userNameEditingController = TextEditingController();
-  final studentIdentityController =  TextEditingController();
   final majorController =  TextEditingController();
   final educationController =  TextEditingController() ;
   final passwordController =  TextEditingController();
@@ -147,31 +146,7 @@ class _SignUpStudentState extends State<SignUpStudent> {
       ),
     );
 
-    // Student Indentity Field
-    final studentIndentityField = TextFormField(
-      controller: studentIdentityController,
-      validator: (value){
-        if(value!.isEmpty)
-        {
-          return ("Please enter your identity");
-        }
-        if(value.length<8)
-        {
-          return ("Please enter a valid identity");
-        }
-        return null;
-      },
-      onSaved: (value) => studentIdentityController.text = value!,
-      textInputAction: TextInputAction.next,
-      decoration:  InputDecoration(
-        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Identity",
-        border:  OutlineInputBorder(borderSide:BorderSide( color: HexColor("#697A98"))),           
-         focusedBorder: OutlineInputBorder(
-           borderSide: BorderSide( color:  HexColor("#697A98") )
-         )
-      ),
-    );
+    
 
     //Password Field
      final passwordField = TextFormField (
@@ -310,11 +285,7 @@ class _SignUpStudentState extends State<SignUpStudent> {
                      
                     const SizedBox(height: 10),
                     emailField,
-                      
-                    const SizedBox(height: 10),
-                   studentIndentityField,
-                     
-	                  
+                          
                     /*SizedBox(height: 10),
                     Material(
                       child: genderOptions,
@@ -382,7 +353,6 @@ class _SignUpStudentState extends State<SignUpStudent> {
       studentUID: user.uid,
       education : educationController.text ,
       major : majorController.text,
-      studentIdentity : studentIdentityController.text 
     );
    
     await firebaseFirestore
