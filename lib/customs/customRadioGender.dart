@@ -4,7 +4,7 @@ import 'package:pfa2_mobile_app/customs/customModels/gender.dart';
 
 class CustomRadio extends StatelessWidget {
   
-  Gender _gender;
+ final  Gender _gender;
 
   CustomRadio(this._gender);
 
@@ -16,7 +16,7 @@ class CustomRadio extends StatelessWidget {
           height: 80,
           width: 80,
           alignment: Alignment.center,
-          margin: new EdgeInsets.all(5.0),
+          margin: const EdgeInsets.all(5.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

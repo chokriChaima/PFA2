@@ -1,16 +1,16 @@
 class Reservation {
 
-  String? reservationUID ;
+  bool? isLunch ;
   int? partyNumber ;
 
   // constructor 
-  Reservation({this.reservationUID,this.partyNumber});
+  Reservation({this.isLunch,this.partyNumber});
 
   // getting data from server
   factory Reservation.fromMap(map)
   {
     return Reservation(
-      reservationUID :map ['reservationUID'],
+      isLunch: map['isLunch'],
       partyNumber : map['partyNumber'],
     );
   } 
@@ -19,7 +19,7 @@ class Reservation {
   Map<String, dynamic> toMap()
   {
     return {
-      "reservationUID" : reservationUID ,
+      "isLunch" : isLunch ,
       "partyNumber"    : partyNumber,
     };
   }

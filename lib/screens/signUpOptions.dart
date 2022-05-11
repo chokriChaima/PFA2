@@ -1,88 +1,51 @@
 import 'package:flutter/material.dart' ;
 import 'package:hexcolor/hexcolor.dart';
+import 'package:pfa2_mobile_app/customs/sharedWidgets/sign_up_option_card.dart';
 import 'package:pfa2_mobile_app/screens/signUpStudent.dart';
 import 'package:pfa2_mobile_app/screens/signUpTeacher.dart';
+
+import '../customs/sharedElements.dart/AppColors.dart';
 
 
 class SignUpOptions extends StatefulWidget {
   const SignUpOptions({ Key? key }) : super(key: key);
-
   @override
   State<SignUpOptions> createState() => _SignUpOptionsState();
 }
 
 class _SignUpOptionsState extends State<SignUpOptions> {
 
+  List<SignUpOptionCard> optionList= [SignUpOptionCard("Sign up as a student",const SignUpStudent()),
+                                      SignUpOptionCard("Sign up as a teacher",const SignUpTeacher()),                              
+                                      ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar : AppBar(
+        title:  Text("Sign Up Options", style : TextStyle(color: HexColor("#697A98"), fontWeight: FontWeight.bold)),
+        centerTitle: true,
+        leading: BackButton(
+          color: HexColor("#697A98"),
+        ),
+      ),
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(5.0),
         child: Column(
-            children: <Widget>[
-              SizedBox(height: 50,),
-              Card(
-                  elevation : 8.0,
-                  margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      
-                      color:  HexColor("#ECEDEF")
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        const Padding (
-                          padding:  EdgeInsets.all(20.0),
-                          child: Text("Sign up as a teacher", style:  TextStyle(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 19,
-                            fontFamily: "Poppins-Regular",
-                            ),
-                          ),
-                        ),
-                        IconButton(onPressed: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const SignUpTeacher() ),
-                        );}
-                        ,icon: const Icon(Icons.arrow_forward_ios)),
-                      ],
-                    ),
-                  )
-              ),
-              Card(
-                elevation : 8.0,
-                margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color:  HexColor("#ECEDEF")
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      const Padding (
-                        padding:  EdgeInsets.all(20.0),
-                        child: Text("Sign up as a student", style:  TextStyle(
-                          fontWeight: FontWeight.normal,
-                          fontSize: 19,
-                          fontFamily: "Poppins-Regular",
-                          ),
-                        ),
-                      ),
-                      IconButton(onPressed: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const SignUpStudent() ),
-                      );}
-                      ,icon: const Icon(Icons.arrow_forward_ios)),
-                    ],
-                  ),
-                )
-              ),
-            ],
-          ),
+          children: <Widget>[
+            const SizedBox(height: 10,),
+            ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount : optionList.length,
+              itemBuilder: (context,index){
+                
+                return optionList[index];
+              },
+            )
+          ],
+        ) ,
       )
       
     );

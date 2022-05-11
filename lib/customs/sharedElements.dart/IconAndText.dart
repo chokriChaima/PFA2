@@ -11,8 +11,8 @@ class IconAndText extends StatelessWidget {
     required this.icon, 
     required this.text, 
     this.iconSize = 7.0,
-    this.color, 
-    this.iconColor 
+    this.color , 
+    this.iconColor = const Color(0xFF697A98)
   }) : super(key: key);
 
   @override

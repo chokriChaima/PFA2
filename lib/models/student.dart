@@ -13,7 +13,7 @@ class Student extends Client{
   {
     return Student(
       map['userName'],
-      map['gendre'],
+      map['gender'],
       map['email'],
       map['password'],
       studentUID: map['studentUID'], 

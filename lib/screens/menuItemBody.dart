@@ -4,6 +4,7 @@ import 'package:pfa2_mobile_app/customs/sharedElements.dart/AppColors.dart';
 import 'package:pfa2_mobile_app/customs/sharedElements.dart/BigText.dart';
 import 'package:pfa2_mobile_app/customs/sharedElements.dart/IconAndText.dart';
 import 'package:pfa2_mobile_app/customs/sharedElements.dart/SmallText.dart';
+import 'package:pfa2_mobile_app/screens/getMenuItem.dart';
 class MenuItemBody extends StatefulWidget {
   const MenuItemBody({ Key? key }) : super(key: key);
 
@@ -53,12 +54,13 @@ class _MenuItemBodyState extends State<MenuItemBody> {
             return _buildPageItem(position);
           })
         ),
+         const SizedBox(height: 15,),
          DotsIndicator(
           dotsCount: 2,
           position: _currentPageValue,
           decorator: DotsDecorator(
-            color: AppColors.whiteGreyColor,
-            activeColor:AppColors.whiteGreyColor ,
+            color: AppColors.mainColor,
+            activeColor:AppColors.mainColor ,
             size: const Size.square(9.0),
             activeSize: const Size(88.0, 9.0),
             activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
@@ -105,8 +107,8 @@ class _MenuItemBodyState extends State<MenuItemBody> {
         Align(
            alignment: Alignment.bottomCenter,
             child: Container(
-              height: 95,
-              margin: const EdgeInsets.only(bottom: 22,left: 30.0,right:30.0,top: 10.0),
+              height: 123,
+              margin: const EdgeInsets.only(bottom: 2,left: 30.0,right:30.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: Colors.white,
@@ -128,7 +130,7 @@ class _MenuItemBodyState extends State<MenuItemBody> {
 
               ),
               child: Container(
-                padding: EdgeInsets.only(top:17,left:15,right:15,),
+                padding: const EdgeInsets.only(top:17,left:15,right:15,),
                 child: Column(
                   children: <Widget>[
                     Row(
@@ -139,11 +141,21 @@ class _MenuItemBodyState extends State<MenuItemBody> {
                      ],
                     ),
                     const SizedBox(height: 7.0),
-                    IconAndText(icon: Icons.brightness_1, text: "Chocolate Milk", iconColor: AppColors.whiteGreyColor),
-                    IconAndText(icon: Icons.brightness_1, text: "Sandwich", iconColor: AppColors.whiteGreyColor),
+                    const IconAndText(icon: Icons.brightness_1, text: "Chocolate Milk"),
+                    const IconAndText(icon: Icons.brightness_1, text: "Sandwich"),
                     //IconAndText(icon: Icons.brightness_1, text: "Donnut", iconColor: AppColors.backgroundWhite),
                     //IconAndText(icon: Icons.brightness_1, text: "Tart", iconColor: AppColors.backgroundWhite),
-                  
+                    Container(
+                      margin: const EdgeInsets.only(left: 200),
+                      child: IconButton(onPressed: (){
+                        
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const GetMenuItem() ),
+                          );}
+                          ,icon: const Icon(Icons.arrow_forward_ios,size:15)
+                        ),
+                    ),
                   ],
                 )
               )

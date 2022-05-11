@@ -255,7 +255,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar : AppBar(
-        title:  Text("Sign Up", style : TextStyle(color: HexColor("#697A98"), fontWeight: FontWeight.bold)),
+        title:  Text("Sign Up Teacher", style : TextStyle(color: HexColor("#697A98"), fontWeight: FontWeight.bold)),
         centerTitle: true,
         leading: BackButton(
           color: HexColor("#697A98"),
@@ -343,6 +343,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
     User? user = _auth.currentUser;
 
     Gender userGender = genders.firstWhere((element) => element.isSelected);
+    
     // writing all the values 
     // user.uid is never null 
     Teacher teacher = Teacher(

@@ -215,7 +215,7 @@ class _LogInState extends State<LogIn> {
              MaterialPageRoute(builder: (context) => const Home() )
             );
       }on FirebaseAuthException  catch (e)  {
-          Fluttertoast.showToast(msg: "User does not exist");
+           Fluttertoast.showToast(msg: "User does not exist");
       }
     }
   }

@@ -257,7 +257,7 @@ class _SignUpStudentState extends State<SignUpStudent> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar : AppBar(
-        title:  Text("Sign Up", style : TextStyle(color: HexColor("#697A98"), fontWeight: FontWeight.bold)),
+        title:  Text("Sign Up Student", style : TextStyle(color: HexColor("#697A98"), fontWeight: FontWeight.bold)),
         centerTitle: true,
         leading: BackButton(
           color: HexColor("#697A98"),
