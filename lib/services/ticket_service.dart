@@ -9,28 +9,16 @@ class TicketService{
   UserService userService;
   TicketService({required this.userService});
   
-  Future<bool?> isExistTicket() async{
-    await getTicket()
-    .then((value) {
-      if(value.exists){
-        return true ;
-      }
-      else {
-        return false ;
-      }
-      
-    });
-  }
-  
-  Future<void> updateTicket(int value)async{
 
-    var data = await getTicket();
-    Ticket updateTicket = Ticket.fromMap(data);
-    updateTicket.setTicketValue(value);
-    createTicket(updateTicket);
-  } 
-  
-   Future<void> createTicket(Ticket ticket) async 
+  // get ticket 
+  Future<DocumentSnapshot<Object?>> getTicket() async{
+    return await userService.getTicketsCollection()
+    .doc(userService.user!.uid)
+    .get() ;
+  }
+
+  // add ticket 
+  Future<void> createTicket(Ticket ticket) async 
   {
     await userService.getTicketsCollection()
     .doc(userService.user!.uid)
@@ -38,12 +26,22 @@ class TicketService{
     Fluttertoast.showToast(msg: "Your purchase is complete") ;
   }
 
-  Future<DocumentSnapshot<Object?>> getTicket() async{
+  /*Future<bool> isExistTicket() async{
+    DocumentSnapshot<Object?> data = await getTicket() ;
+    return data.exists ;
+  }*/
+  
+  Future<void> updateTicket(int value,DocumentSnapshot<Object?> data)async{
+
     
-    return await userService.getTicketsCollection()
-    .doc(userService.user!.uid)
-    .get() ;
-  }
+    Ticket updateTicket = Ticket.fromMap(data);
+    updateTicket.setTicketValue(updateTicket.getTicketValue()+value);
+    createTicket(updateTicket);
+  } 
+  
+   
+
+  
 
   
 }

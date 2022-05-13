@@ -122,9 +122,9 @@ class _GetMenuItemState extends State<GetMenuItem> {
       bottomNavigationBar: Container(
         height: 120,
         padding: const EdgeInsets.only(top:30,bottom : 30,left:20,right:20),
-        decoration:  BoxDecoration(
-          color: AppColors.mainColor,
-          borderRadius:const  BorderRadius.only(
+        decoration:  const BoxDecoration(
+          color: Colors.white,
+          borderRadius:  BorderRadius.only(
             topLeft: Radius.circular(30),
             topRight: Radius.circular(30),
 
@@ -155,7 +155,7 @@ class _GetMenuItemState extends State<GetMenuItem> {
 
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color :Colors.white
+                color :AppColors.mainColor
               ),
               child: MaterialButton(
                padding: const EdgeInsets.fromLTRB(20, 15, 20,15),
@@ -164,7 +164,7 @@ class _GetMenuItemState extends State<GetMenuItem> {
                   ReservationService reservationService = ReservationService(userService : userService);
                   reservationService.makeReservation(reservation);
                 },
-                child: BigText(text: "Make reservation",fontweight: FontWeight.normal)
+                child: BigText(text: "Make reservation",fontweight: FontWeight.normal,color: Colors.white,)
               ),
             )
             

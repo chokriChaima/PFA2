@@ -34,12 +34,13 @@ class _UserReservationsState extends State<UserReservations> {
   Future getReservationList() async{
 
     String userType = await userService.getUserType() ;
-    var data ;
+    QuerySnapshot<Object?> data ;
     var userInfo ;
 
     if(userType == "teacher")
     {
       data = await ReservationService(userService: userService).getReservationsTeacher();
+      data.docs ;
       userInfo = await userService.getUserTeacher();
       userInfo = Teacher.fromMap(userInfo);
     }
@@ -87,7 +88,7 @@ class _UserReservationsState extends State<UserReservations> {
               itemCount : _reservationList.length,
               itemBuilder: (context,index){
                 
-                return ReservationCard(_reservationList[index],_userName);
+                return ReservationCard(_reservationList[index],_userName,index);
               },
             ): BigText(text: "No reservation have been made")
           ]

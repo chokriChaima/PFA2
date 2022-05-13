@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:pfa2_mobile_app/models/student.dart';
 
-import '../models/teacher.dart';
 
 class UserService{
 
@@ -14,18 +12,29 @@ class UserService{
   CollectionReference getTicketsCollection(){
     return database.collection("tickets");
   }
-  
+  CollectionReference getStaffCollection(){
+    return database.collection("staff");
+  }
+
+  CollectionReference getTeachersCollection(){
+    return database.collection("teachers");
+  }
+
+  CollectionReference getStudentsCollection(){
+    return database.collection("students");
+  }
+
+
   Future<DocumentSnapshot<Object?>> getUserTeacher() async{
-    CollectionReference teachersCollection = database.collection("teachers");
     return await 
-    teachersCollection
+    getTeachersCollection()
     .doc(user!.uid)
     .get();
   }
 
   Future<DocumentSnapshot<Object?>> getUserStudent() async{
-   CollectionReference teachersCollection = database.collection("students");
-   return await  teachersCollection
+
+   return await  getStudentsCollection()
     .doc(user!.uid)
     .get();
   }

@@ -52,7 +52,8 @@ class ReservationService{
           .then(
             (DocumentSnapshot documentSnapshot) async {
             if(documentSnapshot.exists){
-              await teachersCollection
+              await userService
+              .getTeachersCollection()
               .doc(userService.user!.uid)
               .collection("reservations")
               .add(reservation.toMap());
@@ -62,6 +63,20 @@ class ReservationService{
         }
     });
     
+  }
+
+  Future<String?> getStudentReservationDocumentID(index) async{
+    var data = await getReservationsStudent();
+    return data.docs[index].id; 
+  }
+  Future<void> deleteReservationStudent(int index) async {
+    var dataID = await getStudentReservationDocumentID(index);
+    await userService
+    .getStudentsCollection()
+    .doc(userService.user!.uid)
+    .collection("reservations")
+    .doc(dataID)
+    .delete();
   }
     
 

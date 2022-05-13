@@ -37,11 +37,12 @@ class TicketOptionListTime extends StatelessWidget {
   }
 
   void manageTickets(int value) async{
-    TicketService ticketService = new TicketService(userService: userService);
+    TicketService ticketService =  TicketService(userService: userService);
 
-      bool? isExist = await ticketService.isExistTicket();
-      if(isExist!){
-       await ticketService.updateTicket(value);
+      DocumentSnapshot<Object?> data = await ticketService.getTicket() ;
+      if(data.exists){
+        await ticketService.updateTicket(value,data);
+        print("update complete");
       }
       else{
         Ticket ticket = Ticket(expirationDate: DateTime.now().add(const Duration (days:30) ), purchasedTickets: ticketValue);

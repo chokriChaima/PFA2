@@ -10,7 +10,7 @@ import 'package:pfa2_mobile_app/services/ticket_service.dart';
 import '../services/user_service.dart';
 
 class BuyTickets extends StatefulWidget {
-   BuyTickets({ Key? key }) : super(key: key);
+   const BuyTickets({ Key? key }) : super(key: key);
   
   @override
   State<BuyTickets> createState() => _BuyTicketsState();
@@ -40,14 +40,19 @@ class _BuyTicketsState extends State<BuyTickets> {
     super.didChangeDependencies();
     getCurrentTicket();
   }
+  
   getCurrentTicket() async{
     TicketService ticketService = TicketService(userService: userService);
     var ticket = await ticketService.getTicket();
-    
-    setState(() {
-      _currentTicket = Ticket.fromMap(ticket);
-     
-    });
+    if(ticket.exists){
+      setState(() {
+        _currentTicket = Ticket.fromMap(ticket);
+      });
+    }
+    else{
+      print("no ticket has been created for tnis user");
+    }
+   
   }
 
   @override

@@ -3,6 +3,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:pfa2_mobile_app/customs/sharedWidgets/sign_up_option_card.dart';
 import 'package:pfa2_mobile_app/screens/signUpStudent.dart';
 import 'package:pfa2_mobile_app/screens/signUpTeacher.dart';
+import 'package:pfa2_mobile_app/screens/sign_up_staff.dart';
 
 import '../customs/sharedElements.dart/AppColors.dart';
 
@@ -17,7 +18,7 @@ class _SignUpOptionsState extends State<SignUpOptions> {
 
   List<SignUpOptionCard> optionList= [SignUpOptionCard("Sign up as a student",const SignUpStudent()),
                                       SignUpOptionCard("Sign up as a teacher",const SignUpTeacher()),                              
-                                      ];
+                                      SignUpOptionCard("Sign up as a staff member",const SignUpStaff())];
 
   @override
   Widget build(BuildContext context) {
