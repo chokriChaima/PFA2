@@ -159,10 +159,10 @@ class _GetMenuItemState extends State<GetMenuItem> {
               ),
               child: MaterialButton(
                padding: const EdgeInsets.fromLTRB(20, 15, 20,15),
-                onPressed: ()  {
+                onPressed: ()  async{
                   Reservation reservation = Reservation(isLunch: true, partyNumber: 1);
                   ReservationService reservationService = ReservationService(userService : userService);
-                  reservationService.makeReservation(reservation);
+                  await reservationService.makeReservation(reservation);
                 },
                 child: BigText(text: "Make reservation",fontweight: FontWeight.normal,color: Colors.white,)
               ),

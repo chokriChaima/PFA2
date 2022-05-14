@@ -23,7 +23,7 @@ class TicketService{
     await userService.getTicketsCollection()
     .doc(userService.user!.uid)
     .set(ticket.toMap());
-    Fluttertoast.showToast(msg: "Your purchase is complete") ;
+    
   }
 
   /*Future<bool> isExistTicket() async{

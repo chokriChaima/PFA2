@@ -26,11 +26,11 @@ class Teacher extends Client {
   Map<String, dynamic> toMap()
   {
     return {
-      "studentUID": teacherUID, 
-      "education":  workPlace,
+      "teacherUID": teacherUID, 
+      "departement":  department,
+      "workPlace":  workPlace,
       "email":  email,
       "gender": gender,
-      "major":  department,
       "password":  password,
       "userName": userName, 
     };

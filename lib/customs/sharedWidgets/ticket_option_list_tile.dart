@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pfa2_mobile_app/customs/sharedElements.dart/AppColors.dart';
 import 'package:pfa2_mobile_app/customs/sharedElements.dart/BigText.dart';
 import 'package:pfa2_mobile_app/services/ticket_service.dart';
@@ -48,6 +49,7 @@ class TicketOptionListTime extends StatelessWidget {
         Ticket ticket = Ticket(expirationDate: DateTime.now().add(const Duration (days:30) ), purchasedTickets: ticketValue);
         await ticketService.createTicket(ticket);
       }
+    Fluttertoast.showToast(msg: "Your purchase is complete") ;
         
   }
 }

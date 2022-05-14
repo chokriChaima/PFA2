@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pfa2_mobile_app/models/reservation.dart';
+import 'package:pfa2_mobile_app/models/ticket.dart';
+import 'package:pfa2_mobile_app/services/ticket_service.dart';
 import 'package:pfa2_mobile_app/services/user_service.dart';
 class ReservationService{
 
@@ -30,39 +32,49 @@ class ReservationService{
 
   Future<void> makeReservation(Reservation reservation) async 
   {
-    CollectionReference studentsCollection = userService.database.collection("students");
-    CollectionReference teachersCollection = userService.database.collection("teachers");
+    String userType = await userService.getUserType();
 
-      await studentsCollection
-      .doc(userService.user!.uid)
-      .get()
-      .then
-      ((DocumentSnapshot documentSnapshot) async {
-        if(documentSnapshot.exists){
-          await studentsCollection.
-          doc(userService.user!.uid)
-          .collection("reservations")
-          .add(reservation.toMap());
-          Fluttertoast.showToast(msg: "Successful student reservation") ;
-        }
-        else{
-          await teachersCollection
-          .doc(userService.user!.uid)
-          .get()
-          .then(
-            (DocumentSnapshot documentSnapshot) async {
-            if(documentSnapshot.exists){
-              await userService
-              .getTeachersCollection()
-              .doc(userService.user!.uid)
-              .collection("reservations")
-              .add(reservation.toMap());
-              Fluttertoast.showToast(msg: "Successful teacher reservation") ;
-            }
-          });
-        }
-    });
+    TicketService ticketService = TicketService(userService: userService);
+    var data = await ticketService.getTicket();
+
     
+    if(data.exists && Ticket.fromMap(data).purchasedTickets>0){
+      
+      if(userType == "student"){
+        await makeReservationStudent(reservation);
+      }
+      else if (userType =="teacher")
+      {
+        await makeReservationTeacher(reservation);
+      }
+      ticketService.updateTicket(-1, data);
+      Fluttertoast.showToast(msg: "Done, we hope you enjoy today's meal") ;
+    }
+    else {
+      Fluttertoast.showToast(msg: "You dont have enough tickets") ;
+    }
+  
+    
+
+    
+    
+    
+  }
+
+    Future<void> makeReservationStudent(Reservation reservation) async{
+    await userService
+    .getStudentsCollection()
+    .doc(userService.user!.uid)
+    .collection("reservations")
+    .add(reservation.toMap());
+  }
+
+  Future<void> makeReservationTeacher(Reservation reservation) async{
+    await userService
+    .getTeachersCollection()
+    .doc(userService.user!.uid)
+    .collection("reservations")
+    .add(reservation.toMap());
   }
 
   Future<String?> getStudentReservationDocumentID(index) async{
@@ -70,6 +82,10 @@ class ReservationService{
     return data.docs[index].id; 
   }
   Future<void> deleteReservationStudent(int index) async {
+
+    TicketService ticketService =  TicketService(userService: userService);
+    var ticketData = await ticketService.getTicket();
+
     var dataID = await getStudentReservationDocumentID(index);
     await userService
     .getStudentsCollection()
@@ -77,6 +93,8 @@ class ReservationService{
     .collection("reservations")
     .doc(dataID)
     .delete();
+
+    ticketService.updateTicket(1, ticketData);
   }
     
 
