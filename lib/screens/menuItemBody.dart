@@ -1,9 +1,9 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:pfa2_mobile_app/customs/sharedElements.dart/AppColors.dart';
-import 'package:pfa2_mobile_app/customs/sharedElements.dart/BigText.dart';
-import 'package:pfa2_mobile_app/customs/sharedElements.dart/IconAndText.dart';
-import 'package:pfa2_mobile_app/customs/sharedElements.dart/SmallText.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements/AppColors.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements/BigText.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements/IconAndText.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements/SmallText.dart';
 import 'package:pfa2_mobile_app/screens/getMenuItem.dart';
 class MenuItemBody extends StatefulWidget {
   const MenuItemBody({ Key? key }) : super(key: key);

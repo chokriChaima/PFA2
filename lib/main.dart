@@ -1,11 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:pfa2_mobile_app/customs/sharedElements.dart/AppColors.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements/AppColors.dart';
 import 'package:pfa2_mobile_app/firebase_options.dart';
-import 'package:pfa2_mobile_app/screens/getMenuItem.dart';
-import 'package:pfa2_mobile_app/screens/home.dart';
 import 'package:pfa2_mobile_app/screens/logIn.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/services.dart';
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();

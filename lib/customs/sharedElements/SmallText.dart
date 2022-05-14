@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:pfa2_mobile_app/customs/sharedElements.dart/AppColors.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements/AppColors.dart';
 
-class SmallTextCentered extends StatelessWidget {
+class SmallText extends StatelessWidget {
 
   Color? color;
   final String text ;
   double size ;
   double height;
-  SmallTextCentered({ Key? key ,
+  SmallText({ Key? key ,
   this.height = 1.0,
   required this.text,
   //this.color = const Color(0xFF89DAD0),
@@ -20,7 +20,6 @@ class SmallTextCentered extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      textAlign: TextAlign.center,
       style: TextStyle(
         color : color,
         fontFamily: 'Roboto',

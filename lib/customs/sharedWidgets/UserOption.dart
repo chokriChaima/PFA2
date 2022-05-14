@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pfa2_mobile_app/customs/sharedElements.dart/AppColors.dart';
-import 'package:pfa2_mobile_app/customs/sharedElements.dart/BigText.dart';
-import 'package:pfa2_mobile_app/customs/sharedElements.dart/SmallTextCentered.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements/AppColors.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements/BigText.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements/SmallTextCentered.dart';
 
 class UserOption extends StatelessWidget {
   final String text ;

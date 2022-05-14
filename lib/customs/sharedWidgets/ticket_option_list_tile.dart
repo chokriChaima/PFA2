@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pfa2_mobile_app/customs/sharedElements.dart/AppColors.dart';
-import 'package:pfa2_mobile_app/customs/sharedElements.dart/BigText.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements/AppColors.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements/BigText.dart';
 import 'package:pfa2_mobile_app/services/ticket_service.dart';
 
 import '../../models/ticket.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../sharedElements.dart/AppColors.dart';
+import '../sharedElements/AppColors.dart';
 
 class SignUpOptionCard  extends StatelessWidget {
   final Widget optionRoute ;

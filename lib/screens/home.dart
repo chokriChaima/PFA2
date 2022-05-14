@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' ;
-import 'package:pfa2_mobile_app/customs/sharedElements.dart/AppColors.dart';
-import 'package:pfa2_mobile_app/customs/sharedElements.dart/BigText.dart';
-import 'package:pfa2_mobile_app/customs/sharedElements.dart/SmallText.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements/AppColors.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements/BigText.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements/SmallText.dart';
 import 'package:pfa2_mobile_app/customs/sharedWidgets/UserOption.dart';
 import 'package:pfa2_mobile_app/screens/buyTickets.dart';
 import 'package:pfa2_mobile_app/screens/menuItemBody.dart';

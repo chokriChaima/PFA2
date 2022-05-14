@@ -5,7 +5,7 @@ import 'package:pfa2_mobile_app/screens/signUpStudent.dart';
 import 'package:pfa2_mobile_app/screens/signUpTeacher.dart';
 import 'package:pfa2_mobile_app/screens/sign_up_staff.dart';
 
-import '../customs/sharedElements.dart/AppColors.dart';
+import '../customs/sharedElements/AppColors.dart';
 
 
 class SignUpOptions extends StatefulWidget {

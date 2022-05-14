@@ -1,17 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:pfa2_mobile_app/customs/sharedElements.dart/AppColors.dart';
-import 'package:pfa2_mobile_app/customs/sharedElements.dart/AppIcon.dart';
-import 'package:pfa2_mobile_app/customs/sharedElements.dart/BigText.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements/AppColors.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements/BigText.dart';
 import 'package:pfa2_mobile_app/models/reservation.dart';
 import 'package:pfa2_mobile_app/services/reservation_service.dart';
 import 'package:pfa2_mobile_app/services/user_service.dart';
 
-import '../customs/sharedElements.dart/IconAndText.dart';
-import '../customs/sharedElements.dart/SmallText.dart';
+import '../customs/sharedElements/IconAndText.dart';
+import '../customs/sharedElements/SmallText.dart';
 
 class GetMenuItem extends StatefulWidget {
   const GetMenuItem({ Key? key }) : super(key: key);

@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:pfa2_mobile_app/customs/sharedElements.dart/SmallText.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements/SmallText.dart';
 class IconAndText extends StatelessWidget {
 
   final IconData icon;

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pfa2_mobile_app/customs/sharedElements.dart/BigText.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements/BigText.dart';
 import 'package:pfa2_mobile_app/customs/sharedWidgets/reservationCard.dart';
 import 'package:pfa2_mobile_app/models/client.dart';
 import 'package:pfa2_mobile_app/models/reservation.dart';
@@ -9,7 +9,7 @@ import 'package:pfa2_mobile_app/models/student.dart';
 import 'package:pfa2_mobile_app/models/teacher.dart';
 import 'package:pfa2_mobile_app/services/reservation_service.dart';
 
-import '../customs/sharedElements.dart/AppColors.dart';
+import '../customs/sharedElements/AppColors.dart';
 import '../services/user_service.dart';
 
 class UserReservations extends StatefulWidget {
