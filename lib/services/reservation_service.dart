@@ -38,7 +38,7 @@ class ReservationService{
     var data = await ticketService.getTicket();
 
     
-    if(data.exists && Ticket.fromMap(data).purchasedTickets>0){
+    if(data.exists && Ticket.fromMap(data).purchasedTickets>reservation.partyNumber!){
       
       if(userType == "student"){
         await makeReservationStudent(reservation);
@@ -47,7 +47,7 @@ class ReservationService{
       {
         await makeReservationTeacher(reservation);
       }
-      ticketService.updateTicket(-1, data);
+      ticketService.updateTicket(-(reservation.partyNumber!), data);
       Fluttertoast.showToast(msg: "Done, we hope you enjoy today's meal") ;
     }
     else {
@@ -77,24 +77,24 @@ class ReservationService{
     .add(reservation.toMap());
   }
 
-  Future<String?> getStudentReservationDocumentID(index) async{
+  Future<QueryDocumentSnapshot<Object?>> getStudentReservationDocumentID(index) async{
     var data = await getReservationsStudent();
-    return data.docs[index].id; 
+    return data.docs[index]; 
   }
   Future<void> deleteReservationStudent(int index) async {
 
     TicketService ticketService =  TicketService(userService: userService);
     var ticketData = await ticketService.getTicket();
 
-    var dataID = await getStudentReservationDocumentID(index);
+    var data = await getStudentReservationDocumentID(index);
     await userService
     .getStudentsCollection()
     .doc(userService.user!.uid)
     .collection("reservations")
-    .doc(dataID)
+    .doc(data.id)
     .delete();
 
-    ticketService.updateTicket(1, ticketData);
+    ticketService.updateTicket(Reservation.fromMap(data).partyNumber!, ticketData);
   }
     
 

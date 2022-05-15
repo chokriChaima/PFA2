@@ -37,6 +37,7 @@ dependencies:
   fluttertoast: ^8.0.9
   material_design_icons_flutter: ^5.0.6595
   dots_indicator: ^2.1.0
+  firebase_storage: ^10.2.16
 
 
   # The following adds the Cupertino Icons font to your application.

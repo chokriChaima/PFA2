@@ -24,6 +24,10 @@ class UserService{
     return database.collection("students");
   }
 
+  CollectionReference getMenusCollection(){
+    return database.collection("menus");
+  }
+
 
   Future<DocumentSnapshot<Object?>> getUserTeacher() async{
     return await 

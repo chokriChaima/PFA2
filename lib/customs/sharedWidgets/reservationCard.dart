@@ -56,7 +56,7 @@ class ReservationCard extends StatelessWidget {
               Row(
                 children: <Widget>[
 
-                  SmallText(text: "Date : 23/04/2022"),
+                  SmallText(text: "${_reservation.date?.day.toString()} / ${_reservation.date?.month.toString()} / ${_reservation.date?.year.toString()}"),
                 ],
               ),
               ]

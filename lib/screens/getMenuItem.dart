@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pfa2_mobile_app/customs/sharedElements/AppColors.dart';
 import 'package:pfa2_mobile_app/customs/sharedElements/BigText.dart';
+import 'package:pfa2_mobile_app/models/menu_item.dart';
 import 'package:pfa2_mobile_app/models/reservation.dart';
 import 'package:pfa2_mobile_app/services/reservation_service.dart';
 import 'package:pfa2_mobile_app/services/user_service.dart';
@@ -11,7 +13,8 @@ import '../customs/sharedElements/IconAndText.dart';
 import '../customs/sharedElements/SmallText.dart';
 
 class GetMenuItem extends StatefulWidget {
-  const GetMenuItem({ Key? key }) : super(key: key);
+  final MenuItem menuItem ;
+  GetMenuItem({required this.menuItem});
 
   @override
   State<GetMenuItem> createState() => _GetMenuItemState();
@@ -20,7 +23,8 @@ class GetMenuItem extends StatefulWidget {
 class _GetMenuItemState extends State<GetMenuItem> {
 
   UserService userService = UserService( database: FirebaseFirestore.instance, user: FirebaseAuth.instance.currentUser );
-
+  int partyNumber = 0;
+  
   @override
   void initState() {
     super.initState();
@@ -30,7 +34,9 @@ class _GetMenuItemState extends State<GetMenuItem> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: BigText(text: "Today's Lunch",size: 20,),
+        
+        
+        title: BigText(text: widget.menuItem.isLunch ? "Today's Lunch": "Today's Dinner",size: 20,),
         leading:
          IconButton(
             padding: const EdgeInsets.all(2),
@@ -58,17 +64,14 @@ class _GetMenuItemState extends State<GetMenuItem> {
                 width: double.maxFinite,
                 margin: const EdgeInsets.only(top:25),
                 height: 230,
-                decoration: const BoxDecoration(
-                  
+                decoration:  BoxDecoration(
                   color: Colors.white,
                   image: DecorationImage(
                       fit: BoxFit.contain,
-                    image: AssetImage(
-                      "assets/images/lunch3.jpg"
-                    )
+                      image: NetworkImage("${widget.menuItem.imageURL}")  ,
                   )
                 ),
-                 ),
+              ),
             ),
             
            
@@ -93,19 +96,20 @@ class _GetMenuItemState extends State<GetMenuItem> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                            children: <Widget>[
-                             BigText(text: "Lunch",size: 32,),
-                             SmallText(text: "10/04/2022",size: 16,),
+                             BigText(text: "${widget.menuItem.title}" ,size: 32,),
+                             SmallText(text: "${widget.menuItem.availabilityDate?.day.toString()} / ${widget.menuItem.availabilityDate?.month.toString()} / ${widget.menuItem.availabilityDate?.year.toString()}",size: 16,),
                            ],
                           ),
                         ),
                         const SizedBox(height: 10.0),
-                        IconAndText(icon: Icons.brightness_1, text: "Chocolate Milk", iconColor: AppColors.mainColor),
-                        const SizedBox(height: 4.0),
-                        IconAndText(icon: Icons.brightness_1, text: "Sandwich", iconColor: AppColors.mainColor),
-                        const SizedBox(height: 4.0),
-                        IconAndText(icon: Icons.brightness_1, text: "Donnut", iconColor: AppColors.mainColor),
-                        const SizedBox(height: 4.0),
-                        IconAndText(icon: Icons.brightness_1, text: "Tart", iconColor:AppColors.mainColor),
+                       ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: widget.menuItem.components.length,
+                        itemBuilder: (context,index){
+                          return IconAndText(icon: Icons.brightness_1, text: widget.menuItem.components[index],size: 20,);
+                        },
+                  ),
                       
                       ],
                     ),
@@ -128,28 +132,10 @@ class _GetMenuItemState extends State<GetMenuItem> {
           )
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            /*Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.white,
-              ),
-              child: Row(
-                children: <Widget>[
-                  const Icon(Icons.remove, color: AppColors.textColor,),
-                  const SizedBox(width: 10,),
-                  BigText(text: "0"),
-                  const SizedBox(width: 10,),
-                  const Icon(Icons.add, color:AppColors.textColor),
-
-                ],
-              ),
-            ),*/
             Container(
               padding: const EdgeInsets.all(5),
-
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color :AppColors.mainColor
@@ -157,13 +143,46 @@ class _GetMenuItemState extends State<GetMenuItem> {
               child: MaterialButton(
                padding: const EdgeInsets.fromLTRB(20, 15, 20,15),
                 onPressed: ()  async{
-                  Reservation reservation = Reservation(isLunch: true, partyNumber: 1);
+                  Reservation reservation = Reservation(isLunch: widget.menuItem.isLunch, partyNumber: partyNumber,date: widget.menuItem.availabilityDate);
                   ReservationService reservationService = ReservationService(userService : userService);
                   await reservationService.makeReservation(reservation);
                 },
                 child: BigText(text: "Make reservation",fontweight: FontWeight.normal,color: Colors.white,)
               ),
-            )
+            ),
+            Container(
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: AppColors.mainColor,
+              ),
+              child: Row(
+                children: <Widget>[
+                  IconButton(
+                    onPressed: (){
+                      setState(() {
+                        if(partyNumber>0)
+                        {
+                          partyNumber--;
+                        }
+                        else{
+                          Fluttertoast.showToast(msg :"you're already at zero");
+                        }
+                      });
+                    }, icon:const Icon(Icons.remove, color:Colors.white)
+                  ),
+                  BigText(text: partyNumber.toString() ,color:Colors.white ,),
+                  IconButton(
+                    onPressed: (){
+                      setState(() {
+                        partyNumber++;
+                      });
+                    }, icon:const Icon(Icons.add, color:Colors.white)
+                  ),
+
+                ],
+              ),
+            ),
             
           ],
         ),
@@ -171,3 +190,4 @@ class _GetMenuItemState extends State<GetMenuItem> {
     );
   }
 }
+

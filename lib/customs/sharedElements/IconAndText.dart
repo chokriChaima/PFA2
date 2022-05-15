@@ -4,10 +4,12 @@ class IconAndText extends StatelessWidget {
 
   final IconData icon;
   final String text;
+  final double size;
   final Color?color;
   final Color?iconColor;
   final double iconSize;
   const IconAndText({ Key? key, 
+    this.size =15,
     required this.icon, 
     required this.text, 
     this.iconSize = 7.0,
@@ -21,7 +23,7 @@ class IconAndText extends StatelessWidget {
       children: <Widget>[
         Icon(icon, color: iconColor,size: iconSize,),
         const SizedBox(width : 5,),
-        SmallText(text: text, color: color,size: 14,),
+        SmallText(text: text, color: color,size: size,),
       ],
     );
   }

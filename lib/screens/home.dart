@@ -4,6 +4,7 @@ import 'package:pfa2_mobile_app/customs/sharedElements/BigText.dart';
 import 'package:pfa2_mobile_app/customs/sharedElements/SmallText.dart';
 import 'package:pfa2_mobile_app/customs/sharedWidgets/UserOption.dart';
 import 'package:pfa2_mobile_app/screens/buyTickets.dart';
+import 'package:pfa2_mobile_app/screens/logIn.dart';
 import 'package:pfa2_mobile_app/screens/menuItemBody.dart';
 import 'package:pfa2_mobile_app/screens/userReservations.dart';
 
@@ -73,7 +74,7 @@ class _HomeState extends State<Home> {
                   Expanded(
                     child: UserOption(title: "Give Us Your Feedback",
                     text :"We are always looking for your opinion to help ameliorate our app",
-                    direction: const Home(),),
+                    direction: const LogIn() ),
                   ),
                   const SizedBox(height: 20,)
                 ],
