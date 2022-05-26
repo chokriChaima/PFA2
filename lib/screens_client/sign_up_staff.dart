@@ -4,28 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:pfa2_mobile_app/screens/logIn.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements/AppColors.dart';
+import 'package:pfa2_mobile_app/customs/sharedElements/BigText.dart';
+import 'package:pfa2_mobile_app/screens_client/logIn.dart';
 import '../customs/customModels/gender.dart';
 import '../customs/customRadioGender.dart';
-import '../models/student.dart';
+import '../models/staff.dart';
 
 
 
 
-class SignUpStudent extends StatefulWidget {
-  const SignUpStudent({ Key? key }) : super(key: key);
+class SignUpStaff extends StatefulWidget {
+  const SignUpStaff({ Key? key }) : super(key: key);
 
   @override
-  State<SignUpStudent> createState() => _SignUpStudentState();
+  State<SignUpStaff> createState() => _SignUpStaffState();
 }
 
-class _SignUpStudentState extends State<SignUpStudent> {
+class _SignUpStaffState extends State<SignUpStaff> {
  final _formKey = GlobalKey<FormState>();
 
   //editing controller
   final userNameEditingController = TextEditingController();
-  final majorController =  TextEditingController();
-  final educationController =  TextEditingController() ;
+  final workSpaceController =  TextEditingController();
   final passwordController =  TextEditingController();
   final confirmPasswordController =  TextEditingController();
   final emailController =  TextEditingController();
@@ -34,8 +35,8 @@ class _SignUpStudentState extends State<SignUpStudent> {
 
   // custom radio options
   List<Gender> genders = <Gender>[
-    new Gender("Male", MdiIcons.genderMale, false),
-    new Gender("Female", MdiIcons.genderFemale, false),
+    Gender("Male", MdiIcons.genderMale, false),
+    Gender("Female", MdiIcons.genderFemale, false),
   ];
   
   // Firebase auth
@@ -97,56 +98,30 @@ class _SignUpStudentState extends State<SignUpStudent> {
       ),
     );
 
-    //Major  => preferably an option-directed list
-    final majorField = TextFormField (
-      autofocus: false,
-      controller: majorController,
-      validator: (value){
-        if(value!.isEmpty)
-        {
-          return("Please enter a major");
-        }
-        
-        return null;
-      },
-      onSaved: (value) => majorController.text = value!,
-      textInputAction: TextInputAction.next,
-      decoration:  InputDecoration(
-        //you may add icons here
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Major",
-        border:  OutlineInputBorder(borderSide:BorderSide( color: HexColor("#697A98"))),           
-         focusedBorder: OutlineInputBorder(
-           borderSide: BorderSide( color:  HexColor("#697A98") )
-         )
-      ),
-    );
+    
 
-    // Education Field
-    final educationField = TextFormField (
+    final workSpaceField = TextFormField (
       autofocus: false,
-      controller: educationController,
+      controller: workSpaceController,
       validator: (value){
         if(value!.isEmpty)
         {
-          return("Please enter your eductaion. school name");
+          return("Please enter your work place name");
         }
         return null;
       },
-      onSaved: (value) => educationController.text = value!,
+      onSaved: (value) => workSpaceController.text = value!,
       textInputAction: TextInputAction.next,
       decoration:  InputDecoration(
         //you may add icons here
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "University",
+        hintText: "Work Place",
         border:  OutlineInputBorder(borderSide:BorderSide( color: HexColor("#697A98"))),           
          focusedBorder: OutlineInputBorder(
            borderSide: BorderSide( color:  HexColor("#697A98") )
          )
       ),
     );
-
-    
 
     //Password Field
      final passwordField = TextFormField (
@@ -154,7 +129,7 @@ class _SignUpStudentState extends State<SignUpStudent> {
       autofocus: false,
       controller: passwordController,
       validator: (value){
-        RegExp regex = new RegExp(r'^.{6,}$');
+        RegExp regex = RegExp(r'^.{6,}$');
         if (value!.isEmpty) {
           return ("Password is required for login");
         }
@@ -181,7 +156,7 @@ class _SignUpStudentState extends State<SignUpStudent> {
       autofocus: false,
       controller: confirmPasswordController,
       validator : (value){
-        RegExp regex = new RegExp(r'^.{6,}$');
+        RegExp regex =  RegExp(r'^.{6,}$');
         if (value!.isEmpty) {
           return ("Password is required for login");
         }
@@ -207,8 +182,33 @@ class _SignUpStudentState extends State<SignUpStudent> {
     );
 
     
-    
-  final genderOptions = ListView.builder(
+      bool? _isAdmin = false ;
+      final membershipTypes = ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: 2,
+      itemBuilder: (context,index){
+            return
+            ListTile(
+              title: BigText(text: "Administrative Member",size : 15),
+              leading: Radio<bool?>(
+                value : true,
+                groupValue: _isAdmin,
+                onChanged: (bool? value){
+                  setState(() {
+                    _isAdmin = value ;
+                  });
+                },
+              ),
+            );
+      }
+    );  
+
+  
+  
+
+  
+    final genderOptions = ListView.builder(
     scrollDirection: Axis.horizontal,
     shrinkWrap: true,
     itemCount: genders.length,
@@ -218,7 +218,9 @@ class _SignUpStudentState extends State<SignUpStudent> {
         
         onTap: () {
           setState(() {
-            genders.forEach((gender) => gender.isSelected = false);
+            for (var gender in genders) {
+              gender.isSelected = false;
+            }
             genders[index].isSelected = true;
           });
         },
@@ -230,8 +232,8 @@ class _SignUpStudentState extends State<SignUpStudent> {
 
         
    
-    //SignUpStudent  button
-    final SignUpStudentButton = Material(
+    
+    final signUpStaffButton = Material(
       elevation: 8,
       shadowColor: HexColor('#697A98'),
       color: HexColor('#697A98'),
@@ -239,7 +241,7 @@ class _SignUpStudentState extends State<SignUpStudent> {
         padding: const EdgeInsets.fromLTRB(20, 15, 20,15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: (){
-          SignUpStudent(emailController.text, passwordController.text);
+          signUpStaff(emailController.text, passwordController.text);
         },
         child: const Text(
           'Sign Up',
@@ -257,7 +259,7 @@ class _SignUpStudentState extends State<SignUpStudent> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar : AppBar(
-        title:  Text("Sign Up Student", style : TextStyle(color: HexColor("#697A98"), fontWeight: FontWeight.bold)),
+        title:  Text("Sign Up Staff", style : TextStyle(color: HexColor("#697A98"), fontWeight: FontWeight.bold)),
         centerTitle: true,
         leading: BackButton(
           color: HexColor("#697A98"),
@@ -276,36 +278,28 @@ class _SignUpStudentState extends State<SignUpStudent> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                      userNameField,
-                      
+        
                     const SizedBox(height: 10),
-                     majorField,
-                     
-                    const SizedBox(height: 10),
-                     educationField,
+                     workSpaceField,
                      
                     const SizedBox(height: 10),
                     emailField,
-                          
-                    /*SizedBox(height: 10),
-                    Material(
-                      child: genderOptions,
-                      elevation: 8,
-	                    shadowColor: Colors.white,
-                      ),*/
                     const SizedBox(height: 10),
-                     passwordField,
-                      
-                     const SizedBox(height: 10),
-                     confirmPasswordField,
-                      
-                  
-                     const SizedBox(height: 10),
                     Container(
-                      height: 100,
+                      height: 120,
                       padding: const EdgeInsets.all(5),
+                      child: membershipTypes
+                    ),
+                    const SizedBox(height: 10),
+                    passwordField,
+                    const SizedBox(height: 10),
+                    confirmPasswordField,
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      height: 100,
                       child: genderOptions, ),
                     const SizedBox(height: 25),
-                    SignUpStudentButton
+                    signUpStaffButton
                   ],
                 )
               ),
@@ -316,7 +310,8 @@ class _SignUpStudentState extends State<SignUpStudent> {
         )
     );
   }
-  Future<void> SignUpStudent(String email,String password) async{
+
+  Future<void> signUpStaff(String email,String password) async{
     if(_formKey.currentState!.validate())
     {
       await _auth
@@ -343,23 +338,24 @@ class _SignUpStudentState extends State<SignUpStudent> {
     User? user = _auth.currentUser;
 
     Gender userGender = genders.firstWhere((element) => element.isSelected);
+    
     // writing all the values 
     // user.uid is never null 
-    Student student = Student(
+    Staff adminStaffMember = Staff(
       userNameEditingController.text,
       userGender.name,
       user!.email,
       passwordController.text,
-      studentUID: user.uid,
-      education : educationController.text ,
-      major : majorController.text,
+      staffUID: user.uid,
+      workPlace : workSpaceController.text ,
+      isAdministrative : true,
     );
    
     await firebaseFirestore
-          .collection("students")
+          .collection("staff")
           .doc(user.uid)
-          .set(student.toMap());
-    Fluttertoast.showToast(msg: "Account successfully created") ;
+          .set(adminStaffMember.toMap());
+    Fluttertoast.showToast(msg: "Staff account successfully created") ;
 
     // Push the given route onto the navigator that most tightly encloses the given context,
     // and then remove all the previous routes until the predicate returns true

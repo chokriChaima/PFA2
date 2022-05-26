@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pfa2_mobile_app/customs/sharedElements/AppColors.dart';
 import 'package:pfa2_mobile_app/firebase_options.dart';
-import 'package:pfa2_mobile_app/screens/logIn.dart';
+import 'package:pfa2_mobile_app/screens_client/logIn.dart';
 import 'package:flutter/services.dart';
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,7 +10,7 @@ Future<void> main() async{
     options: DefaultFirebaseOptions.currentPlatform);
     
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
+    statusBarColor: AppColors.mainColor,
     ));
   runApp(const MyApp());
 }

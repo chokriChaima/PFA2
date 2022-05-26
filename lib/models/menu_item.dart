@@ -1,6 +1,6 @@
 
 class MenuItem{
-  String? id ;
+  //String? id ;
   int? maxReservationNumber ;
   String? title;
   String? imageURL;
@@ -8,12 +8,16 @@ class MenuItem{
   List<String> components ;
   bool isLunch ;
 
-  MenuItem({required this.isLunch,this.availabilityDate,required this.components,this.maxReservationNumber,this.id,this.title,this.imageURL});
+  MenuItem({required this.isLunch,this.availabilityDate,required this.components,this.maxReservationNumber,this.title,this.imageURL});
 
+  setReservatioNumber(int value){
+    maxReservationNumber = maxReservationNumber! + value;
+  }
+  
   // from fb
   factory MenuItem.fromMap(map){
     return MenuItem(
-      id: map['id'],
+     // id: map['id'],
       maxReservationNumber : map['maxReservationNumber'],
       title : map['title'],
       imageURL : map['imageURL'],
@@ -22,6 +26,17 @@ class MenuItem{
       components : List.from(map['Components']),
       isLunch: map['isLunch'],
     );
+  }
+
+  Map<String,dynamic> toMap(){
+    return{
+      "Components" : components,
+      "availabilityDate" : availabilityDate,
+      "imageURL" : "",
+      "isLunch" : isLunch,
+      "maxReservationNumber": maxReservationNumber,
+      "title" : title,
+    };
   }
 
   // to fb

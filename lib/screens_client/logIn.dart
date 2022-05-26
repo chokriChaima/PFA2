@@ -2,8 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:pfa2_mobile_app/screens/home.dart';
-import 'package:pfa2_mobile_app/screens/signUpOptions.dart';
+import 'package:pfa2_mobile_app/customs/sharedWidgets/second_main_admin.dart';
+import 'package:pfa2_mobile_app/screens_client/signUpOptions.dart';
+
 
 class LogIn extends StatefulWidget {
   const LogIn({ Key? key }) : super(key: key);
@@ -112,7 +113,7 @@ class _LogInState extends State<LogIn> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar : AppBar(
-        title:  Text("Log In", style : TextStyle(color: HexColor("#697A98"), fontWeight: FontWeight.bold)),
+        title:  Text("Log In", style : TextStyle(color: HexColor("#697A98"), fontWeight: FontWeight.bold,fontSize: 25)),
         centerTitle: true,
         leading: BackButton(
           color: HexColor("#697A98"),
@@ -131,7 +132,7 @@ class _LogInState extends State<LogIn> {
                  // mainAxisAlignment: MainAxisAlignment.,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     const Text("Welcome back,", 
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -179,15 +180,7 @@ class _LogInState extends State<LogIn> {
                         )
                       ],
                     ),
-                    // delete me later
-                    Center(
-                      child: TextButton(onPressed: (){
-                        Navigator.pushReplacement(
-                          context, MaterialPageRoute(builder: (context) => Home() ));
-                        }
-                        , child: const Text("take me home")
-                      ),
-                    )
+                  
                   ],
                 )
               ),
@@ -212,7 +205,7 @@ class _LogInState extends State<LogIn> {
             password: password);
             Fluttertoast.showToast(msg: "Login Successful");
             Navigator.of(context).pushReplacement(
-             MaterialPageRoute(builder: (context) => const Home() )
+             MaterialPageRoute(builder: (context) => const SecondMainAdmin() )
             );
       }on FirebaseAuthException  catch (e)  {
            Fluttertoast.showToast(msg: "User does not exist");

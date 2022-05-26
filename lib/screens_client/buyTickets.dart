@@ -59,9 +59,10 @@ class _BuyTicketsState extends State<BuyTickets> {
   Widget build(BuildContext context) {
     return Scaffold  (
       appBar: AppBar(
-        title: BigText(text: "Ticket Shop"),
-        leading: const BackButton(
-            color : AppColors.textColor,
+        centerTitle: true,
+        title: BigText(text: "Ticket Shop",color: AppColors.mainColor,),
+        leading:  BackButton(
+            color : AppColors.mainColor,
         ),
       ),
       body : SingleChildScrollView(

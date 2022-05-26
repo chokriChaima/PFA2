@@ -3,10 +3,12 @@ import 'package:pfa2_mobile_app/customs/sharedElements/AppColors.dart';
 import 'package:pfa2_mobile_app/customs/sharedElements/BigText.dart';
 import 'package:pfa2_mobile_app/customs/sharedElements/SmallText.dart';
 import 'package:pfa2_mobile_app/customs/sharedWidgets/UserOption.dart';
-import 'package:pfa2_mobile_app/screens/buyTickets.dart';
-import 'package:pfa2_mobile_app/screens/logIn.dart';
-import 'package:pfa2_mobile_app/screens/menuItemBody.dart';
-import 'package:pfa2_mobile_app/screens/userReservations.dart';
+import 'package:pfa2_mobile_app/screens_client/buyTickets.dart';
+import 'package:pfa2_mobile_app/screens_client/logIn.dart';
+import 'package:pfa2_mobile_app/screens_client/menuItemBody.dart';
+import 'package:pfa2_mobile_app/screens_client/userReservations.dart';
+
+import '../customs/sharedWidgets/Second_Main.dart';
 
 class Home extends StatefulWidget {
   const Home({ Key? key }) : super(key: key);
@@ -19,17 +21,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: BigText(text: "Home"),
-        leading: IconButton(icon: Icon(Icons.segment),
-        color : AppColors.textColor,
-        
-        onPressed: (){
-          Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const UserReservations() ));
-        }
-        )
-      ),
+      
       body:SafeArea(
         child: SingleChildScrollView(
         child:SizedBox(

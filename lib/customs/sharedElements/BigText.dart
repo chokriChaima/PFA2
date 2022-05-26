@@ -9,11 +9,13 @@ class BigText extends StatelessWidget {
   final String text ;
   double size ;
   FontWeight fontweight ;
+  bool underline ;
 
   //TextOverflow overFlow ; 
   // this.overFlow = TextOverflow.ellipsis ;
 
   BigText({ Key? key, 
+  this.underline = false ,
   this.color =const Color(0xFF332D2B), 
   required this.text,
   this.size = 20,
@@ -29,6 +31,7 @@ class BigText extends StatelessWidget {
         fontFamily: 'Roboto',
         fontWeight: fontweight,
         fontSize: size,
+        decoration: underline ? TextDecoration.underline : TextDecoration.none
       )
     );
   }

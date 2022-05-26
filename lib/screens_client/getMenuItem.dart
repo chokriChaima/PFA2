@@ -96,7 +96,7 @@ class _GetMenuItemState extends State<GetMenuItem> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                            children: <Widget>[
-                             BigText(text: "${widget.menuItem.title}" ,size: 32,),
+                             BigText(text: "${widget.menuItem.title}" ,size: 25,),
                              SmallText(text: "${widget.menuItem.availabilityDate?.day.toString()} / ${widget.menuItem.availabilityDate?.month.toString()} / ${widget.menuItem.availabilityDate?.year.toString()}",size: 16,),
                            ],
                           ),
@@ -107,7 +107,7 @@ class _GetMenuItemState extends State<GetMenuItem> {
                         shrinkWrap: true,
                         itemCount: widget.menuItem.components.length,
                         itemBuilder: (context,index){
-                          return IconAndText(icon: Icons.brightness_1, text: widget.menuItem.components[index],size: 20,);
+                          return IconAndText(icon: Icons.brightness_1, text: widget.menuItem.components[index],size: 19,);
                         },
                   ),
                       

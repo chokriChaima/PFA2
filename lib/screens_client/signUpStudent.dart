@@ -4,28 +4,28 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:pfa2_mobile_app/models/teacher.dart';
-import 'package:pfa2_mobile_app/screens/logIn.dart';
+import 'package:pfa2_mobile_app/screens_client/logIn.dart';
 import '../customs/customModels/gender.dart';
 import '../customs/customRadioGender.dart';
+import '../models/student.dart';
 
 
 
 
-class SignUpTeacher extends StatefulWidget {
-  const SignUpTeacher({ Key? key }) : super(key: key);
+class SignUpStudent extends StatefulWidget {
+  const SignUpStudent({ Key? key }) : super(key: key);
 
   @override
-  State<SignUpTeacher> createState() => _SignUpTeacherState();
+  State<SignUpStudent> createState() => _SignUpStudentState();
 }
 
-class _SignUpTeacherState extends State<SignUpTeacher> {
+class _SignUpStudentState extends State<SignUpStudent> {
  final _formKey = GlobalKey<FormState>();
 
   //editing controller
   final userNameEditingController = TextEditingController();
-  final workSpaceController =  TextEditingController();
-  final departmentController =  TextEditingController() ;
+  final majorController =  TextEditingController();
+  final educationController =  TextEditingController() ;
   final passwordController =  TextEditingController();
   final confirmPasswordController =  TextEditingController();
   final emailController =  TextEditingController();
@@ -97,24 +97,24 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
       ),
     );
 
-    //department 
-    final departmentField = TextFormField (
+    //Major  => preferably an option-directed list
+    final majorField = TextFormField (
       autofocus: false,
-      controller: departmentController,
+      controller: majorController,
       validator: (value){
         if(value!.isEmpty)
         {
-          return("Please enter your department name");
+          return("Please enter a major");
         }
         
         return null;
       },
-      onSaved: (value) => departmentController.text = value!,
+      onSaved: (value) => majorController.text = value!,
       textInputAction: TextInputAction.next,
       decoration:  InputDecoration(
         //you may add icons here
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "department",
+        hintText: "Major",
         border:  OutlineInputBorder(borderSide:BorderSide( color: HexColor("#697A98"))),           
          focusedBorder: OutlineInputBorder(
            borderSide: BorderSide( color:  HexColor("#697A98") )
@@ -122,29 +122,31 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
       ),
     );
 
-    // work space Field
-    final workSpaceField = TextFormField (
+    // Education Field
+    final educationField = TextFormField (
       autofocus: false,
-      controller: workSpaceController,
+      controller: educationController,
       validator: (value){
         if(value!.isEmpty)
         {
-          return("Please enter the institution name");
+          return("Please enter your eductaion. school name");
         }
         return null;
       },
-      onSaved: (value) => workSpaceController.text = value!,
+      onSaved: (value) => educationController.text = value!,
       textInputAction: TextInputAction.next,
       decoration:  InputDecoration(
         //you may add icons here
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Institution",
+        hintText: "University",
         border:  OutlineInputBorder(borderSide:BorderSide( color: HexColor("#697A98"))),           
          focusedBorder: OutlineInputBorder(
            borderSide: BorderSide( color:  HexColor("#697A98") )
          )
       ),
     );
+
+    
 
     //Password Field
      final passwordField = TextFormField (
@@ -228,8 +230,8 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
 
         
    
-    //SignUpTeacher  button
-    final SignUpTeacherButton = Material(
+    //SignUpStudent  button
+    final SignUpStudentButton = Material(
       elevation: 8,
       shadowColor: HexColor('#697A98'),
       color: HexColor('#697A98'),
@@ -237,7 +239,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
         padding: const EdgeInsets.fromLTRB(20, 15, 20,15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: (){
-          SignUpTeacher(emailController.text, passwordController.text);
+          SignUpStudent(emailController.text, passwordController.text);
         },
         child: const Text(
           'Sign Up',
@@ -255,7 +257,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar : AppBar(
-        title:  Text("Sign Up Teacher", style : TextStyle(color: HexColor("#697A98"), fontWeight: FontWeight.bold)),
+        title:  Text("Sign Up Student", style : TextStyle(color: HexColor("#697A98"), fontWeight: FontWeight.bold)),
         centerTitle: true,
         leading: BackButton(
           color: HexColor("#697A98"),
@@ -276,16 +278,14 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
                      userNameField,
                       
                     const SizedBox(height: 10),
-                     departmentField,
+                     majorField,
                      
                     const SizedBox(height: 10),
-                     workSpaceField,
+                     educationField,
                      
                     const SizedBox(height: 10),
                     emailField,
-                     
-                     
-	                  
+                          
                     /*SizedBox(height: 10),
                     Material(
                       child: genderOptions,
@@ -305,7 +305,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
                       padding: const EdgeInsets.all(5),
                       child: genderOptions, ),
                     const SizedBox(height: 25),
-                    SignUpTeacherButton
+                    SignUpStudentButton
                   ],
                 )
               ),
@@ -316,7 +316,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
         )
     );
   }
-  Future<void> SignUpTeacher(String email,String password) async{
+  Future<void> SignUpStudent(String email,String password) async{
     if(_formKey.currentState!.validate())
     {
       await _auth
@@ -343,23 +343,22 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
     User? user = _auth.currentUser;
 
     Gender userGender = genders.firstWhere((element) => element.isSelected);
-    
     // writing all the values 
     // user.uid is never null 
-    Teacher teacher = Teacher(
+    Student student = Student(
       userNameEditingController.text,
       userGender.name,
       user!.email,
       passwordController.text,
-      teacherUID: user.uid,
-      workPlace : workSpaceController.text ,
-      department : departmentController.text,
+      studentUID: user.uid,
+      education : educationController.text ,
+      major : majorController.text,
     );
    
     await firebaseFirestore
-          .collection("teachers")
+          .collection("students")
           .doc(user.uid)
-          .set(teacher.toMap());
+          .set(student.toMap());
     Fluttertoast.showToast(msg: "Account successfully created") ;
 
     // Push the given route onto the navigator that most tightly encloses the given context,

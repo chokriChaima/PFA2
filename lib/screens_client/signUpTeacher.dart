@@ -4,27 +4,28 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:pfa2_mobile_app/screens/logIn.dart';
+import 'package:pfa2_mobile_app/models/teacher.dart';
+import 'package:pfa2_mobile_app/screens_client/logIn.dart';
 import '../customs/customModels/gender.dart';
 import '../customs/customRadioGender.dart';
-import '../models/staff.dart';
 
 
 
 
-class SignUpStaff extends StatefulWidget {
-  const SignUpStaff({ Key? key }) : super(key: key);
+class SignUpTeacher extends StatefulWidget {
+  const SignUpTeacher({ Key? key }) : super(key: key);
 
   @override
-  State<SignUpStaff> createState() => _SignUpStaffState();
+  State<SignUpTeacher> createState() => _SignUpTeacherState();
 }
 
-class _SignUpStaffState extends State<SignUpStaff> {
+class _SignUpTeacherState extends State<SignUpTeacher> {
  final _formKey = GlobalKey<FormState>();
 
   //editing controller
   final userNameEditingController = TextEditingController();
   final workSpaceController =  TextEditingController();
+  final departmentController =  TextEditingController() ;
   final passwordController =  TextEditingController();
   final confirmPasswordController =  TextEditingController();
   final emailController =  TextEditingController();
@@ -33,8 +34,8 @@ class _SignUpStaffState extends State<SignUpStaff> {
 
   // custom radio options
   List<Gender> genders = <Gender>[
-    Gender("Male", MdiIcons.genderMale, false),
-    Gender("Female", MdiIcons.genderFemale, false),
+    new Gender("Male", MdiIcons.genderMale, false),
+    new Gender("Female", MdiIcons.genderFemale, false),
   ];
   
   // Firebase auth
@@ -96,15 +97,39 @@ class _SignUpStaffState extends State<SignUpStaff> {
       ),
     );
 
-    
+    //department 
+    final departmentField = TextFormField (
+      autofocus: false,
+      controller: departmentController,
+      validator: (value){
+        if(value!.isEmpty)
+        {
+          return("Please enter your department name");
+        }
+        
+        return null;
+      },
+      onSaved: (value) => departmentController.text = value!,
+      textInputAction: TextInputAction.next,
+      decoration:  InputDecoration(
+        //you may add icons here
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: "department",
+        border:  OutlineInputBorder(borderSide:BorderSide( color: HexColor("#697A98"))),           
+         focusedBorder: OutlineInputBorder(
+           borderSide: BorderSide( color:  HexColor("#697A98") )
+         )
+      ),
+    );
 
+    // work space Field
     final workSpaceField = TextFormField (
       autofocus: false,
       controller: workSpaceController,
       validator: (value){
         if(value!.isEmpty)
         {
-          return("Please enter your work place name");
+          return("Please enter the institution name");
         }
         return null;
       },
@@ -113,7 +138,7 @@ class _SignUpStaffState extends State<SignUpStaff> {
       decoration:  InputDecoration(
         //you may add icons here
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Work Place",
+        hintText: "Institution",
         border:  OutlineInputBorder(borderSide:BorderSide( color: HexColor("#697A98"))),           
          focusedBorder: OutlineInputBorder(
            borderSide: BorderSide( color:  HexColor("#697A98") )
@@ -127,7 +152,7 @@ class _SignUpStaffState extends State<SignUpStaff> {
       autofocus: false,
       controller: passwordController,
       validator: (value){
-        RegExp regex = RegExp(r'^.{6,}$');
+        RegExp regex = new RegExp(r'^.{6,}$');
         if (value!.isEmpty) {
           return ("Password is required for login");
         }
@@ -154,7 +179,7 @@ class _SignUpStaffState extends State<SignUpStaff> {
       autofocus: false,
       controller: confirmPasswordController,
       validator : (value){
-        RegExp regex =  RegExp(r'^.{6,}$');
+        RegExp regex = new RegExp(r'^.{6,}$');
         if (value!.isEmpty) {
           return ("Password is required for login");
         }
@@ -191,9 +216,7 @@ class _SignUpStaffState extends State<SignUpStaff> {
         
         onTap: () {
           setState(() {
-            for (var gender in genders) {
-              gender.isSelected = false;
-            }
+            genders.forEach((gender) => gender.isSelected = false);
             genders[index].isSelected = true;
           });
         },
@@ -205,8 +228,8 @@ class _SignUpStaffState extends State<SignUpStaff> {
 
         
    
-    
-    final signUpStaffButton = Material(
+    //SignUpTeacher  button
+    final SignUpTeacherButton = Material(
       elevation: 8,
       shadowColor: HexColor('#697A98'),
       color: HexColor('#697A98'),
@@ -214,7 +237,7 @@ class _SignUpStaffState extends State<SignUpStaff> {
         padding: const EdgeInsets.fromLTRB(20, 15, 20,15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: (){
-          signUpStaff(emailController.text, passwordController.text);
+          SignUpTeacher(emailController.text, passwordController.text);
         },
         child: const Text(
           'Sign Up',
@@ -232,7 +255,7 @@ class _SignUpStaffState extends State<SignUpStaff> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar : AppBar(
-        title:  Text("Sign Up Staff", style : TextStyle(color: HexColor("#697A98"), fontWeight: FontWeight.bold)),
+        title:  Text("Sign Up Teacher", style : TextStyle(color: HexColor("#697A98"), fontWeight: FontWeight.bold)),
         centerTitle: true,
         leading: BackButton(
           color: HexColor("#697A98"),
@@ -251,7 +274,10 @@ class _SignUpStaffState extends State<SignUpStaff> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                      userNameField,
-        
+                      
+                    const SizedBox(height: 10),
+                     departmentField,
+                     
                     const SizedBox(height: 10),
                      workSpaceField,
                      
@@ -279,7 +305,7 @@ class _SignUpStaffState extends State<SignUpStaff> {
                       padding: const EdgeInsets.all(5),
                       child: genderOptions, ),
                     const SizedBox(height: 25),
-                    signUpStaffButton
+                    SignUpTeacherButton
                   ],
                 )
               ),
@@ -290,7 +316,7 @@ class _SignUpStaffState extends State<SignUpStaff> {
         )
     );
   }
-  Future<void> signUpStaff(String email,String password) async{
+  Future<void> SignUpTeacher(String email,String password) async{
     if(_formKey.currentState!.validate())
     {
       await _auth
@@ -320,21 +346,21 @@ class _SignUpStaffState extends State<SignUpStaff> {
     
     // writing all the values 
     // user.uid is never null 
-    Staff adminStaffMember = Staff(
+    Teacher teacher = Teacher(
       userNameEditingController.text,
       userGender.name,
       user!.email,
       passwordController.text,
-      staffUID: user.uid,
+      teacherUID: user.uid,
       workPlace : workSpaceController.text ,
-      isAdministrative : true,
+      department : departmentController.text,
     );
    
     await firebaseFirestore
-          .collection("staff")
+          .collection("teachers")
           .doc(user.uid)
-          .set(adminStaffMember.toMap());
-    Fluttertoast.showToast(msg: "Staff account successfully created") ;
+          .set(teacher.toMap());
+    Fluttertoast.showToast(msg: "Account successfully created") ;
 
     // Push the given route onto the navigator that most tightly encloses the given context,
     // and then remove all the previous routes until the predicate returns true

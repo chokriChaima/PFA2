@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart' ;
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pfa2_mobile_app/customs/sharedWidgets/sign_up_option_card.dart';
-import 'package:pfa2_mobile_app/screens/signUpStudent.dart';
-import 'package:pfa2_mobile_app/screens/signUpTeacher.dart';
-import 'package:pfa2_mobile_app/screens/sign_up_staff.dart';
+import 'package:pfa2_mobile_app/screens_client/signUpStudent.dart';
+import 'package:pfa2_mobile_app/screens_client/signUpTeacher.dart';
+import 'package:pfa2_mobile_app/screens_client/sign_up_staff.dart';
 
 import '../customs/sharedElements/AppColors.dart';
 

@@ -6,7 +6,7 @@ import 'package:pfa2_mobile_app/customs/sharedElements/AppColors.dart';
 import 'package:pfa2_mobile_app/customs/sharedElements/BigText.dart';
 import 'package:pfa2_mobile_app/customs/sharedElements/IconAndText.dart';
 import 'package:pfa2_mobile_app/customs/sharedElements/SmallText.dart';
-import 'package:pfa2_mobile_app/screens/getMenuItem.dart';
+import 'package:pfa2_mobile_app/screens_client/getMenuItem.dart';
 
 import '../models/menu_item.dart';
 import '../services/menu_item_service.dart';
@@ -192,23 +192,26 @@ class _MenuItemBodyState extends State<MenuItemBody> {
                     ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: _menuItemForToday[position].components.length,
+                    itemCount: _menuItemForToday[position].components.length-2,
                     itemBuilder: (context,index){
                       return IconAndText(icon: Icons.brightness_1, text:_menuItemForToday[position].components[index]);
                     },
                   ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 200),
-                      child: IconButton(onPressed: (){
-                        
-                          Navigator.push(
-                            context,
-                            // pass a menuItem as an attribut
-                            MaterialPageRoute(builder: (context) => GetMenuItem(menuItem :_menuItemForToday[position]) ),
-                          );}
-                          ,icon: const Icon(Icons.arrow_forward_ios,size:15)
-                        ),
-                    ),
+                    Row( mainAxisAlignment: 
+                      MainAxisAlignment.spaceBetween,
+                      children:<Widget> [
+                       SmallText(text: "Click to see more"),
+
+                        IconButton(onPressed: (){
+                      
+                        Navigator.push(
+                          context,
+                          // pass a menuItem as an attribut
+                          MaterialPageRoute(builder: (context) => GetMenuItem(menuItem :_menuItemForToday[position]) ),
+                        );}
+                        ,icon: const Icon(Icons.arrow_forward_ios,size:15)
+                      ),
+                    ],),
                   ],
                 )
               )

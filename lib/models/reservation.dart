@@ -26,7 +26,7 @@ class Reservation {
      // "reservationID" : reservationID,
       "isLunch" : isLunch ,
       "date" : date,
-      "partyNumber"    : partyNumber,
+      "partyNumber" : partyNumber,
     };
   }
 }
