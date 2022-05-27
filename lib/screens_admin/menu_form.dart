@@ -4,28 +4,89 @@ import 'package:flutter/material.dart';
 import 'package:pfa2_mobile_app/customs/sharedElements/AppColors.dart';
 import 'package:pfa2_mobile_app/customs/sharedElements/BigText.dart';
 import 'package:pfa2_mobile_app/customs/sharedElements/SmallText.dart';
+import 'package:pfa2_mobile_app/customs/sharedWidgets/second_main_admin.dart';
+import 'package:pfa2_mobile_app/models/menu_item.dart';
+import 'package:pfa2_mobile_app/screens_admin/home_admin.dart';
 import 'package:pfa2_mobile_app/screens_admin/menu_item_form.dart';
 import 'package:pfa2_mobile_app/services/menu_service.dart';
 
 import '../models/menu.dart';
 import '../services/user_service.dart';
+
 class MenuForm extends StatefulWidget {
-  const MenuForm({ Key? key }) : super(key: key);
+  const MenuForm({Key? key}) : super(key: key);
+
+  
+
 
   @override
   State<MenuForm> createState() => _MenuFormState();
 }
 
 class _MenuFormState extends State<MenuForm> {
-  UserService userService = UserService( database: FirebaseFirestore.instance, user: FirebaseAuth.instance.currentUser );
+  
+
+  UserService userService = UserService(
+      database: FirebaseFirestore.instance,
+      user: FirebaseAuth.instance.currentUser);
+
+  // menu item list
+  List<MenuItem> _menuItemsList = [];
 
   //  Inputs Controllers
   final _formKey = GlobalKey<FormState>();
   final TextEditingController menuTitleController = TextEditingController();
-  final TextEditingController maxNumberItemsController =TextEditingController();
+  final TextEditingController maxNumberItemsController =
+      TextEditingController();
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   if(widget.newMenuItem != null){
+  //     setState(() {
+  //     _menuItemsList.add(widget.newMenuItem!);
+  //     });
+  //   }
+    
+  // }
   @override
   Widget build(BuildContext context) {
+    final menuItemsViewList = ListView.separated(
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                width: 220,
+                height: 40,
+                child: OutlinedButton(
+                  onPressed: () {
+                    print(_menuItemsList[index].toString());
+                  },
+                  child: SmallText(
+                    text: _menuItemsList[index].title!,
+                    color: AppColors.mainColor,
+                    size: 18,
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(color: AppColors.mainColor),
+                  ),
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.delete_rounded),
+                onPressed: () {
+                  deleteMenuItem(index);
+                },
+              ),
+            ],
+          );
+        },
+        separatorBuilder: (context, index) => (const SizedBox(
+              height: 15,
+            )),
+        itemCount: _menuItemsList.length);
     // Input Fields
     final menuItemField = TextFormField(
       style: const TextStyle(
@@ -72,21 +133,22 @@ class _MenuFormState extends State<MenuForm> {
               borderSide: BorderSide(color: AppColors.mainColor))),
     );
 
-    final addMenuItemButton = OutlinedButton(onPressed: (){
-        Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const MenuItemForm() )
-                      );
-    }, 
-    child: SmallText(
+    final addMenuItemButton = OutlinedButton(
+      onPressed: () async{
+        addMenuItem();
+        
+      },
+      child: SmallText(
         text: "Add menu item",
         color: AppColors.mainColor,
         size: 18,
       ),
       style: OutlinedButton.styleFrom(
         side: BorderSide(color: AppColors.mainColor),
-      ),);
+      ),
+    );
 
-      final addButton = ElevatedButton(
+    final addButton = ElevatedButton(
         onPressed: () {
           submitForm();
         },
@@ -95,32 +157,37 @@ class _MenuFormState extends State<MenuForm> {
           color: AppColors.backgroundWhite,
           size: 18,
         ));
+
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: BigText(text: "Menu Form",color: AppColors.mainColor,),
-        leading: BackButton(
-          color: AppColors.mainColor,
+     
+        appBar: AppBar(
+          centerTitle: true,
+          title: BigText(
+            text: "Menu Form",
+            color: AppColors.mainColor,
+          ),
+          leading: BackButton(
+            color: AppColors.mainColor,
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
                 child: BigText(
                   text: "Create your own personalised menu",
                   fontweight: FontWeight.bold,
                 ),
                 padding: const EdgeInsets.only(left: 7, top: 40),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-              child : Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment:  CrossAxisAlignment.center,
-                  children: <Widget>[
-                  const SizedBox(
+              ),
+              Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        const SizedBox(
                           height: 28,
                         ),
                         menuItemField,
@@ -131,32 +198,65 @@ class _MenuFormState extends State<MenuForm> {
                         const SizedBox(
                           height: 28,
                         ),
-                        SizedBox(width :330 ,height :48,child: addMenuItemButton),
+                        SizedBox(
+                            width: 330, height: 48, child: addMenuItemButton),
                         const SizedBox(
                           height: 32,
                         ),
                         BigText(text: "List of your menu Items"),
-                        const SizedBox(height: 10,),
-                        SmallText(text: "No Item(s) added",size: 17,),
                         const SizedBox(
-                          height: 55,
+                          height: 10,
                         ),
-                        SizedBox(width :330 ,height :48,child: addButton),
-                ],),
-              )
-            )
-          ],
-        ),
-      )
-    );
+                        _menuItemsList.isEmpty
+                            ? SmallText(
+                                text: "No Item(s) added",
+                                size: 17,
+                              )
+                            : SmallText(
+                                text: "Click on your menu item for more details",
+                                size: 15.5,
+                              ),const SizedBox(height: 28,), menuItemsViewList,
+                        const SizedBox(
+                          height: 28,
+                        ),
+                        SizedBox(width: 330, height: 48, child: addButton),
+                      ],
+                    ),
+                  ))
+            ],
+          ),
+        ));
   }
 
-  Future<void> submitForm() async{
+  Future<void> submitForm() async {
     MenuService menuService = MenuService(userService: userService);
-    if(_formKey.currentState!.validate()){
-      Menu menu = Menu(maxMenuItem: int.parse(maxNumberItemsController.text),menuTitle: menuTitleController.text,isVerified: false);
+    // List<MenuItem> list_test = [MenuItem(isLunch: false, components: [],title: "test")];
+
+    if (_formKey.currentState!.validate()) {
+      Menu menu = Menu(
+          menuItems: _menuItemsList,
+          maxMenuItem: int.parse(maxNumberItemsController.text),
+          menuTitle: menuTitleController.text,
+          isVerified: false);
       await menuService.addMenu(menu);
-      Navigator.of(context).pop();      
+      Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const SecondMainAdmin()));
     }
+  }
+
+  void deleteMenuItem(int index) {
+    _menuItemsList.removeAt(index);
+    setState(() {
+      
+    });
+  }
+
+  Future<void> addMenuItem() async{
+    MenuItem result = await Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const MenuItemForm()));
+    _menuItemsList.add(result);
+    setState(() {
+      
+    });
   }
 }

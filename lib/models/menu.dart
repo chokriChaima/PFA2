@@ -1,11 +1,17 @@
-import 'package:flutter/foundation.dart';
+
+import 'menu_item.dart';
 
 class Menu{
-  // may later add a list depending.
+ 
+ List<MenuItem> menuItems ;
   bool isVerified; 
   int maxMenuItem ;
   String menuTitle ;
-  Menu({required this.maxMenuItem,required this.menuTitle,required this.isVerified});
+   
+
+  Menu({required this.maxMenuItem,required this.menuTitle,required this.isVerified, this.menuItems = const []});
+
+  
 
   factory Menu.fromMap(map){
     return Menu(
@@ -17,6 +23,7 @@ class Menu{
 
   Map <String,dynamic> toMap(){
     return{
+     
       "maxMenuItem": maxMenuItem,
       "menuTitle": menuTitle,
       "isVerified": isVerified,

@@ -11,14 +11,20 @@ class MenuItemService {
   UserService userService;
   MenuItemService({required this.userService});
 
-  Future<void> addMenuItem(MenuItem menuItem) async {
+
+  void addMultipleMenuItem(List<MenuItem> menuItemsList,String menuId) {
+
+    for (var menuItem in menuItemsList) {
+      addMenuItem(menuItem, menuId);
+    }
+  }
+  Future<void> addMenuItem(MenuItem menuItem,String menuId) async {
     await userService
         .getMenusCollection()
         // this will become dynamic
-        .doc(staticMenuId)
+        .doc(menuId)
         .collection(menuItems)
         .add(menuItem.toMap());
-    Fluttertoast.showToast(msg: "Menu item successfully added") ;
   }
 
   Future<void> updateReservationNumber(String menuItemID, int value) async {
@@ -39,6 +45,7 @@ class MenuItemService {
         .doc("menuItemID")
         .get();
   }
+
 
   DateTime getCurrentDate() {
     DateTime _now = DateTime.now();

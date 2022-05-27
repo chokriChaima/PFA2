@@ -8,7 +8,7 @@ import 'package:pfa2_mobile_app/screens_client/logIn.dart';
 import 'package:pfa2_mobile_app/screens_client/menuItemBody.dart';
 import 'package:pfa2_mobile_app/screens_client/userReservations.dart';
 
-import '../customs/sharedWidgets/Second_Main.dart';
+import '../customs/sharedWidgets/second_main_client.dart';
 
 class Home extends StatefulWidget {
   const Home({ Key? key }) : super(key: key);

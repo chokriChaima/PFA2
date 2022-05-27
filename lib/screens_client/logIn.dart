@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:pfa2_mobile_app/customs/sharedWidgets/Second_Main.dart';
 import 'package:pfa2_mobile_app/customs/sharedWidgets/second_main_admin.dart';
 import 'package:pfa2_mobile_app/screens_client/signUpOptions.dart';
 
@@ -205,7 +206,7 @@ class _LogInState extends State<LogIn> {
             password: password);
             Fluttertoast.showToast(msg: "Login Successful");
             Navigator.of(context).pushReplacement(
-             MaterialPageRoute(builder: (context) => const SecondMainAdmin() )
+             MaterialPageRoute(builder: (context) => const SecondMain() )
             );
       }on FirebaseAuthException  catch (e)  {
            Fluttertoast.showToast(msg: "User does not exist");

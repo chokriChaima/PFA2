@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pfa2_mobile_app/services/menu_item_service.dart';
 import 'package:pfa2_mobile_app/services/user_service.dart';
 
 import '../models/menu.dart';
@@ -10,8 +11,16 @@ class MenuService{
   MenuService({required this.userService});
   final String id_not_found = "Id not found" ;
 
+
+  MenuItemService initializeMenuItemServcice(){
+    return MenuItemService(userService: userService);
+  }
   Future<void> addMenu(Menu menu) async{
-    await userService.getMenusCollection().add(menu.toMap());
+    DocumentReference<Object?> menuRef = await userService.getMenusCollection().add(menu.toMap());
+    
+    if(menu.menuItems.isNotEmpty){
+      initializeMenuItemServcice().addMultipleMenuItem(menu.menuItems, menuRef.id);
+    }
     Fluttertoast.showToast(msg: "Menu successfully created") ;
   }
 

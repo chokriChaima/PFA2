@@ -1,13 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:pfa2_mobile_app/customs/sharedElements/AppColors.dart';
 import 'package:pfa2_mobile_app/customs/sharedElements/BigText.dart';
 import 'package:pfa2_mobile_app/customs/sharedElements/SmallText.dart';
 import 'package:pfa2_mobile_app/customs/sharedWidgets/component_name_field.dart';
 import 'package:pfa2_mobile_app/models/menu_item.dart';
-import 'package:pfa2_mobile_app/services/menu_item_service.dart';
-import 'package:pfa2_mobile_app/services/user_service.dart';
+import 'package:pfa2_mobile_app/screens_admin/menu_form.dart';
 
 class MenuItemForm extends StatefulWidget {
   const MenuItemForm({Key? key}) : super(key: key);
@@ -18,8 +16,7 @@ class MenuItemForm extends StatefulWidget {
 
 class _MenuItemFormState extends State<MenuItemForm> {
 
-  // userService 
-   UserService userService = UserService( database: FirebaseFirestore.instance, user: FirebaseAuth.instance.currentUser );
+ 
 
   //  Inputs Controllers
   final _formKey = GlobalKey<FormState>();
@@ -33,7 +30,6 @@ class _MenuItemFormState extends State<MenuItemForm> {
   // components
   List<ComponentNameField> components = [
     ComponentNameField(),
-    ComponentNameField()
   ];
 
   List<String> componentsElements = [];
@@ -298,7 +294,7 @@ class _MenuItemFormState extends State<MenuItemForm> {
   }
 
   Future<void> submitForm() async{
-    MenuItemService menuItemService = MenuItemService(userService: userService);
+    
     if (_formKey.currentState!.validate()) {
       MenuItem menuItem = MenuItem(
           isLunch: _isLunch,
@@ -311,8 +307,8 @@ class _MenuItemFormState extends State<MenuItemForm> {
         componentsElements.add(element.componentNameController.text);
       }
 
-      await menuItemService.addMenuItem(menuItem);
-      Navigator.of(context).pop(); 
+      Navigator.pop(context,menuItem);
+      // Navigator.push(context, MaterialPageRoute(builder:(context) => MenuForm(newMenuItem : menuItem) ));
     }
   }
 

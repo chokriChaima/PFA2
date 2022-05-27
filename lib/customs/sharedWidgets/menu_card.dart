@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pfa2_mobile_app/customs/sharedElements/IconAndText.dart';
 import 'package:pfa2_mobile_app/customs/sharedElements/SmallTextCentered.dart';
 import 'package:pfa2_mobile_app/customs/sharedWidgets/second_main_admin.dart';
-import 'package:pfa2_mobile_app/screens_admin/home_admin.dart';
 import 'package:pfa2_mobile_app/services/menu_service.dart';
 
 import '../../models/menu.dart';
@@ -23,14 +21,34 @@ class MenuCard extends StatefulWidget {
 }
 
 class _MenuCardState extends State<MenuCard> {
-   
+  UserService userService = UserService(database: FirebaseFirestore.instance,user: FirebaseAuth.instance.currentUser);
+  String userType = "";
+
+  Future<void> setUserType() async{
+    String data = await userService.getUserType() ;
+    setState(() {
+      userType = data ;
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    setUserType();
+  }
+  
   @override
   Widget build(BuildContext context) {
 
     final validateButton = ElevatedButton(
-        onPressed: () {
+        
+        onPressed: userType == "director" ? () {
           updateIsVerified(widget.index,widget.menu.isVerified);
-        },
+        }: null,
         child:
          widget.menu.isVerified ?
          SmallTextCentered(

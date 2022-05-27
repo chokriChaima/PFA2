@@ -1,12 +1,10 @@
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart' ;
-import 'package:pfa2_mobile_app/screens_client/home.dart' ;
-import 'package:pfa2_mobile_app/screens_client/userReservations.dart' ;
-import 'package:pfa2_mobile_app/screens_client/buyTickets.dart' ;
-import 'package:pfa2_mobile_app/screens_client/profileStudent.dart' ;
+import 'package:pfa2_mobile_app/customs/sharedWidgets/second_main_admin.dart';
+import 'package:pfa2_mobile_app/customs/sharedWidgets/second_main_client.dart';
 
-import '../sharedElements/AppColors.dart';
-
+import '../../services/user_service.dart';
 class SecondMain extends StatefulWidget {
   const SecondMain({ Key? key }) : super(key: key);
 
@@ -15,50 +13,34 @@ class SecondMain extends StatefulWidget {
 }
 
 class _SecondMainState extends State<SecondMain> {
-  int currentIndex=0;
-  final screens=[
-    const Home(),
-    const UserReservations(),
-    const BuyTickets(),
-    const StudentProfile(),
-  ];
-  get host => null;
-
-
+  String userType = "";
+  UserService userService = UserService(database: FirebaseFirestore.instance,user: FirebaseAuth.instance.currentUser);
+  Future<void> setUserType() async{
+    String data = await userService.getUserType() ;
+    setState(() {
+      userType = data ;
+    });
+  }
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body:screens[currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index)=>setState(() {
-          currentIndex =index;
-        }),
-        iconSize: 35,
-        items:   [
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.home),
-            label: 'Home',
-            backgroundColor: AppColors.mainColor,
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.restaurant_outlined),
-            label: 'Reservation',
-            backgroundColor:AppColors.mainColor,
-          ),
-           BottomNavigationBarItem(
-            icon: Icon(Icons.confirmation_num),
-            label: 'ticket',
-            backgroundColor:AppColors.mainColor,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-            backgroundColor:AppColors.mainColor,
-          ),
-        ],
-      ),
-    );
+  void initState() {
+    super.initState();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    setUserType();
+  }
+  bool checkIsAdmin(){
+    return userType == "director" || userType == "nutritionist" ;
+  }
+  @override
+  Widget build(BuildContext context) {
+    if(checkIsAdmin()){
+      return const SecondMainAdmin();
+    }
+    else {
+      return const SecondMainClient();
+    }
+  }
 }
