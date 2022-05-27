@@ -2,10 +2,10 @@ import 'package:flutter/foundation.dart';
 
 class Menu{
   // may later add a list depending.
-  bool? isVerified; 
+  bool isVerified; 
   int maxMenuItem ;
   String menuTitle ;
-  Menu({required this.maxMenuItem,required this.menuTitle,this.isVerified});
+  Menu({required this.maxMenuItem,required this.menuTitle,required this.isVerified});
 
   factory Menu.fromMap(map){
     return Menu(
